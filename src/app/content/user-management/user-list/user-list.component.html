@@ -1,0 +1,100 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+    </div>
+
+    <ng-template class="modal text-left" #inviteUserModal let-d="dismiss">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title text-600" id="myModalLabel34">Invite User</h3>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form>
+          <div class="modal-body">
+            <fieldset class="form-group floating-label-form-group">
+              <label for="email">Full Name *</label>
+              <input type="text" ngbAutofocus class="form-control" name="fullName" [(ngModel)]="user.fullName" placeholder="Enter Name here ..">
+            </fieldset>
+            <br>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="title">E-Mail *</label>
+              <input type="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Enter email here ...">
+            </fieldset>
+            <br>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="title1">Organization *</label>
+              <select name="organization" [(ngModel)]="user.organization" class="form-control input-md">
+                <option value="CorpCRS">Kohort</option>
+                <!-- <option value="Hotel">Hotel</option>
+                <option value="Corporate">Corporate</option> -->
+              </select>
+            </fieldset>
+            <fieldset class="form-group floating-label-form-group">
+              <label for="title1">Role *</label>
+              <select name="roleValue" [(ngModel)]="user.roleValue" class="form-control input-md">
+                <option value="">Select Role</option>
+                <option [value]="role.roleValue" *ngFor="let role of roleList">{{ role.roleName }}</option>
+              </select>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="reset" class="btn grey btn-outline-secondary btn-lg" (click)="d('Close modal')">Close</button>
+            <button type="button" class="btn btn-outline-primary btn-lg" (click)="createUser()">
+              <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+              Invite
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+
+    <div class="content-body">
+      <button [showFor]="'ADMIN_MNG_EDIT'" #showFor class="btn btn-outline-primary primary add-btn" style="float:'right';" (click)="inviteUser(inviteUserModal)">
+        Add User
+      </button>
+      <section id="simple-user-cards" class="row">
+        <table class="custom-ctr table table-striped table-bordered table-lg row-border hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>Sl</th>
+              <th>Organization</th>
+              <th>Role</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Active</th>
+              <th>Verified</th>
+              <th>Action</th>
+              <!-- <th>Action</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of userList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.organization }}</td>
+              <td>{{ getRoleName(user.roleValue) }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"
+                  (click)="toggleUser(user)">
+                  <i class="feather toggle-icon font-medium-3 primary"
+                    [ngClass]="{'ft-toggle-left': !user.isActive, 'ft-toggle-right': user.isActive}"></i>
+                </a>
+              </td>
+              <td>{{ user.mailVerified ? 'Yes' : 'No' }}</td>
+              <td>
+                <button class="btn btn-outline-danger danger" style="float:'right';" (click)="deleteUser(user, i)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+  </div>
+</div>

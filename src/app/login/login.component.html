@@ -1,0 +1,165 @@
+<div class="app-content content">
+    <div class="content-overlay"></div>
+        <div class="row content">
+            <div class="col-sm-5 infoSection">
+                <div style="padding:50px;color:white">
+                        <div class="row">
+                            <div>
+                                <img src="assets/images/logo/logo.png" alt="no image" width="165px">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div style="padding-top: 200px;color: #fff;font-size: 2rem; font-weight: 500;line-height: 2;">
+                                <p style="float:right;">Discover your passion</p>
+                                <p style="font-size: 16px;">Level up your skills, follow your passions </p>
+                                <!-- <p style="float:right;">layouts and visual mockups.</p> -->
+                            </div>
+                        </div>
+                        <div class="row mt-5 pt-5" style="float: right;cursor: pointer">
+                            <div class="mt-5 pt-5" style="display: flex;">
+                                <p class="mr-4">Privacy</p>
+                                <p>Contact</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-sm-7 loginSection">
+                <div class="login-container">
+                    <form class="form-horizontal mt-3" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
+                    <div class="row" style="justify-content: center;">
+                    <div class="col-sm-8">
+                            <div class="card-title text-center">
+                                <img src="assets/images/logo/logo.png" style="width: 240px" alt="branding logo">
+                            </div>
+                            <!-- <h3 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                <span>Login</span>
+                            </h3> -->
+                                    <div class="text-field">
+                                        <input style ="background-color: #fff!important;"
+                                        formControlName="email" type="text" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="user-name" required>
+                                        <label>Email*</label>
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Username is required</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-field">
+                                        <input style ="background-color:   #fff!important;"
+                                        formControlName="password" type="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" required>
+                                        <label>Password*</label>
+                                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                        <div *ngIf="f.password.errors.required">Password is required</div>
+                                        </div>
+                                    </div>
+                                        <!-- <div class="text-field">
+                                            <input style ="background-color: white!important;" type="password"
+                                        formControlName="password"
+                                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                                        <label>Password*</label>
+                                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">Password is required</div>
+                                            </div>
+                                    </div> -->
+                            <div class="mt-5" style="display: flex;">
+                                <!-- <div style="color: #aba9b4!important;font-size: 20px;">
+                                    Forgot Password
+                                </div> -->
+                                <div style="margin-left: 51%!important;">
+                                    <button type="submit" style="width: 160px!important;" class="btn btn-primary btn-block">
+                                        <i class="fa fa-refresh fa-spin" *ngIf="submitted"></i>
+                                        <i class="feather ft-unlock" *ngIf="!submitted"></i> Login
+                                    </button>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        </div>
+
+
+
+
+                    </div>
+
+                </form>
+                </div>
+            </div>
+        </div>
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+</div>
+
+
+<!-- <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <section class="row flexbox-container">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div class="col-lg-4 col-md-8 col-10 box-shadow-2 p-0">
+                        <div class="card border-grey border-lighten-3 px-1 py-1 m-0">
+                            <div class="card-header border-0">
+                                <div class="card-title text-center">
+                                    <img src="assets/images/logo/logo.png" style="width: 140px" alt="branding logo">
+                                </div>
+                                <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2">
+                                    <span>Hotel System</span></h6>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form class="form-horizontal" [formGroup]="loginForm" (ngSubmit)="tryLogin()">
+                                        <fieldset class="form-group position-relative has-icon-left">
+                                            <input type="text" formControlName="email" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="user-name"
+                                                placeholder="Your Username" required>
+                                            <div class="form-control-position">
+                                                <i class="la la-user"></i>
+                                            </div>
+                                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                <div *ngIf="f.email.errors.required">Username is required</div>
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group position-relative has-icon-left">
+                                            <input type="password" placeholder="Enter Password"
+                                                formControlName="password" class="form-control"
+                                                [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                            <div class="form-control-position">
+                                                <i class="la la-key"></i>
+                                            </div>
+                                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                                <div *ngIf="f.password.errors.required">Password is required</div>
+                                            </div>
+
+                                        </fieldset>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 col-12 text-center text-sm-left pr-0">
+                                            </div>
+                                            <div class="col-md-6 col-12 float-sm-left text-center text-sm-right"><a
+                                                    href="/" class="card-link">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-info btn-block">
+                                            <i class="fa fa-refresh fa-spin" *ngIf="submitted"></i>
+                                            <i class="feather ft-unlock" *ngIf="!submitted"></i> Login
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a [routerLink]="">Privacy Policy</a>
+                                        </div>
+                                        <div class="col-md-6 terms">
+
+                                            <a [routerLink]="">Terms & Conditions</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div> -->

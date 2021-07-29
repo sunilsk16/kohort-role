@@ -1,0 +1,106 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <div class="col-12">
+        <app-breadcrumb [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <div class="card">
+        <div class="card-body">
+          <section id="icon-tabs">
+            <div class="row">
+              <div class="col-12" *blockUI="'iconTabs'; message: 'Loading'">
+
+                          <form [formGroup]="iconTab" >
+                            <div class="row">
+                              <div class='col-md-6'>
+                                <!-- <h2>Basic Details</h2> -->
+                                <!-- <div class="form-group">
+                                  <label class="form-control-label" for="corpID">Mentor ID :</label>
+                                  <input class="form-control" type="text" formControlName="corpID" />
+
+                                </div> -->
+                                <div class="form-group">
+                                  <label class="form-control-label" for="clientName">Name :</label>
+                                  <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name"/>
+                                </div>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="clietType">Specialties :</label>
+                                  <input class="form-control" type="text" formControlName="specialties" />
+                                </div>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="subModel">Bio :</label>
+                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="bio"></textarea>
+
+                                </div>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="subDate">Achievement :</label>
+                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="achievement"></textarea>
+                                </div>
+                                <div class="form-group">
+                                <div class="photo-upload">
+                            <p class="logo-text">Upload Photos</p>
+                            <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" />
+                          </div>
+                            </div>
+                          <!-- <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" /> -->
+
+                          <form ngNoForm style="display:none">
+                            <input id="avatar" name="file" type="file" (change)="upload()" />
+                          </form>
+                          <br />
+                          <br />
+                              </div>
+                              <div class='col-md-6'>
+
+                                <div class="form-group">
+                                  <label class="form-control-label" for="subDate">Facebook :</label>
+                                  <input class="form-control" type="text" formControlName="facebook" />
+                                </div>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="subDate">Instagram :</label>
+                                  <input class="form-control" type="text" formControlName="instagram" />
+                                </div>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="subDate">Twitter:</label>
+                                  <input class="form-control" type="text" formControlName="twitter" />
+                                </div>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="subDate">Website:</label>
+                                  <input class="form-control" type="text" formControlName="website" />
+                                </div>
+
+
+                          <div class="row">
+                            <div class="column" *ngFor='let url of imageList; let i of index'>
+                              <img [src]="url" alt="Snow" class="img-holder" style="width:100%">
+                              <button class="btn btn-outline-danger" (click)="removeImage(i)">Remove</button>
+                            </div>
+                          </div>
+                              </div>
+                            </div>
+                            <div class="form-group text-center">
+                              <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createMentor(iconTab.value)">
+                              <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                              Submit
+                            </button>
+                            <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateMentors(iconTab.value)">
+                            <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                            Update
+                          </button>
+                            </div>
+                            <button routerLink="/a/subscription/view-subscription" class="btn btn-outline-secondary secondary add-btn" style="float:'right';">
+                              Close
+                            </button>
+                          </form>
+
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

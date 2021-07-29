@@ -1,0 +1,46 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+    </div>
+    <div class="content-body">
+      <section id="user-profile-cards" class="custom-ctr row mt-2">
+        <div class="col-12">
+          <button type="submit" style="float:'right'" class="btn btn-primary" (click)="createRole()">
+            Save
+          </button>
+          <h4 class="text-uppercase">{{ isEdit ? 'Edit ' : ' Create ' }} Role</h4>
+          <!-- <div class="form-group col-md-6">
+            <label class="form-control-label" for="city">Select Organization</label>
+            <select class="form-control input-md border-primary" formControlName="country">
+              <option value="CorpCRS">CorpCRS</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Corporate">Corporate</option>
+            </select>
+          </div> -->
+          <div class="form-group col-md-6">
+            <label for="userinput5" class="text-uppercase">Role Name *</label>
+            <input class="form-control border-primary" type="text" placeholder="Enter role name here .." [(ngModel)]="roleName" name="roleName">
+          </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 col-12" *ngFor="let page of allPages; let index = index">
+          <div class="card">
+            <div style="padding-left: '2.5rem !important';border-bottom: '1px solid #b0b1b5'" class="card-header custom-checkbox">
+              <input class="custom-control-input" (change)="checkAllPermission(page)" type="checkbox" [(ngModel)]="page.isAllChecked" name="checkbox1" id="{{ page.title }}" value="{{ page.title }}" />
+              <label class="custom-control-label" for="{{ page.title }}">{{ page.title }}
+              </label>
+            </div>
+            <div class="list-group">
+              <div style="padding-left: '2.5rem !important'" class="list-group-item custom-control custom-checkbox" *ngFor="let permission of page.permissions; let j = index">
+                <input class="custom-control-input" type="checkbox" [(ngModel)]="permission.isChecked" name="checkbox1" id="{{permission.value}}" value="{{permission.name}}" />
+                <label class="custom-control-label" for="{{permission.value}}">{{ permission.name }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

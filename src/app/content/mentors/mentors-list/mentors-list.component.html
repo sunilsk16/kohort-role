@@ -1,0 +1,50 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-12" [breadcrumb]="breadcrumb"></app-breadcrumb>
+    </div>
+    <div class="content-body">
+      <section id="simple-user-cards" class="row">
+        <table class="custom-ctr table table-striped table-bordered table-lg row-border hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr>
+              <th>Sl</th>
+              <th>Name</th>
+              <th>Specialties</th>
+              <th>Bio</th>
+              <th>Created On</th>
+              <th>Action</th>
+              <th>Active/Pause</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let  mentor of mentorList; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ mentor.name }}</td>
+              <td>{{ mentor.specialties }}</td>
+              <td>{{ mentor.bio}}</td>
+              <!-- <td>{{ group.created_by ? group.created_by.displayName : '' }}</td> -->
+              <td>{{ mentor.created_on }}</td>
+              <td>
+                <button (click)="editMentor(mentor)" class="btn btn-sm btn-outline-info">
+                  Edit
+                </button>
+              </td>
+              <!-- <td>
+                <button disabled (click)="deleteMentor(mentor)" class="btn btn-sm btn-outline-danger">
+                  Delete
+                </button>
+              </td> -->
+              <td>
+                  <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse" (click)="toggleUser(corp)">
+                    <i class="feather toggle-icon font-large-1 primary" [ngClass]="{'ft-toggle-left': !mentor.isActive, 'ft-toggle-right': mentor.isActive}"></i>
+                  </a>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+  </div>
+</div>

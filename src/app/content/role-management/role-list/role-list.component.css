@@ -1,0 +1,13 @@
+:host ::ng-deep .btn.btn-social-icon {
+    padding: unset !important;
+}
+:host ::ng-deep .custom-ctr {
+    background: white;
+    padding: 15px;
+    border: 1px solid gainsboro;
+    padding-top: 30px;
+}
+table.dataTable thead {
+  /* background: red;
+  color: white */
+}
