@@ -19,6 +19,8 @@
                         <label class="form-control-label" for="clientName">Name :</label>
                         <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name" />
                       </div>
+                    </div>
+                    <div class='col-md-6'>
                       <div class="form-group">
                         <label class="form-control-label" for="clietType">Minimum Billing Amount :</label>
                         <input class="form-control" type="number" formControlName="minBilligAmt" />
@@ -27,11 +29,11 @@
 
                   </div>
                   <div class="form-group text-center">
-                    <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createMonial(iconTab.value)">
+                    <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createCoupon(iconTab.value)">
                       <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
                       Submit
                     </button>
-                    <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateTestiMonials(iconTab.value)">
+                    <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateCoupons(iconTab.value)">
                       <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
                       Update
                     </button>

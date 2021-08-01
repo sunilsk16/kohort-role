@@ -13,144 +13,202 @@ export class MentorService {
 
   ref = firebase.firestore().collection('users');
 
-constructor(
-  private firestore: AngularFirestore,
-  public afs: AngularFirestore,
-  private httpService: HttpClient
-) {
-}
-
-generateUniqNumber(length?: any) {
-  var length = length || 8,
-    charset = "0123456789",
-    retVal = "";
-  for (var i = 0, n = charset.length; i < length; ++i) {
-    retVal += charset.charAt(Math.floor(Math.random() * n));
+  constructor(
+    private firestore: AngularFirestore,
+    public afs: AngularFirestore,
+    private httpService: HttpClient
+  ) {
   }
-  return retVal;
-}
 
-// updateMentor(uid: string, user: any) {
-//   user.timeStamp = moment().format('x')
-//   return this.afs.doc('mentors/' + uid).set(user);
-// }
-updateMentor(uid: string, data: any) {
-data.timeStamp = moment().format('x')
-return this.afs.doc('mentors/' + data.id).set(data);
-}
+  generateUniqNumber(length?: any) {
+    var length = length || 8,
+      charset = "0123456789",
+      retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+      retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+  }
 
-addMentor(data: any) {
-  data.timeStamp = moment().format('x')
-  return firebase.firestore().collection('mentors').add(data);
-}
+  // updateMentor(uid: string, user: any) {
+  //   user.timeStamp = moment().format('x')
+  //   return this.afs.doc('mentors/' + uid).set(user);
+  // }
+  updateMentor(uid: string, data: any) {
+    data.timeStamp = moment().format('x')
+    return this.afs.doc('mentors/' + data.id).set(data);
+  }
 
-deleteMentorById(id) {
-return this.afs.doc('mentors/' + id).delete();
-}
+  addMentor(data: any) {
+    data.timeStamp = moment().format('x')
+    return firebase.firestore().collection('mentors').add(data);
+  }
 
-getAllMentors() {
-  return new Promise((resolve) => {
-    this.firestore.collection('mentors').snapshotChanges()
-      .subscribe(mentors => {
-        let contactList = mentors.map(item => {
-          return {
-            ...item.payload.doc.data() as {},
-            id: item.payload.doc.id
-          };
-        });
-        resolve(contactList);
-      })
-  })
-}
+  deleteMentorById(id) {
+    return this.afs.doc('mentors/' + id).delete();
+  }
 
-getMentorsById(id: any) {
-  return new Promise((resolve) => {
-    var docRef = this.firestore.collection("mentors").doc(id);
+  getAllMentors() {
+    return new Promise((resolve) => {
+      this.firestore.collection('mentors').snapshotChanges()
+        .subscribe(mentors => {
+          let contactList = mentors.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
 
-    docRef.ref.get().then(function(doc) {
-      if (doc.exists) {
-        let res = { ...doc.data()  as {} , id: doc.id }
-        resolve(res)
-      }
-    }).catch(function(error) {
-      resolve(null);
-    });
-  })
-}
+  getMentorsById(id: any) {
+    return new Promise((resolve) => {
+      var docRef = this.firestore.collection("mentors").doc(id);
 
-getMentorsBId(mentorId: any) {
-  return new Promise((resolve) => {
-    this.firestore.collection('mentors',
-      ref => ref.where('mentorId', '==', parseInt(mentorId))).snapshotChanges()
-      .subscribe(mentors => {
-        let contactList = mentors.map(item => {
-          return {
-            ...item.payload.doc.data() as {},
-            id: item.payload.doc.id
-          };
-        });
-        resolve(contactList);
-      })
-  })
-}
+      docRef.ref.get().then(function(doc) {
+        if (doc.exists) {
+          let res = { ...doc.data() as {}, id: doc.id }
+          resolve(res)
+        }
+      }).catch(function(error) {
+        resolve(null);
+      });
+    })
+  }
 
-addTestiMonial(data: any) {
-  data.timeStamp = moment().format('x')
-  return firebase.firestore().collection('testimonial').add(data);
-}
+  getMentorsBId(mentorId: any) {
+    return new Promise((resolve) => {
+      this.firestore.collection('mentors',
+        ref => ref.where('mentorId', '==', parseInt(mentorId))).snapshotChanges()
+        .subscribe(mentors => {
+          let contactList = mentors.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
 
-updateTestiMonial(uid: string, data: any) {
-data.timeStamp = moment().format('x')
-return this.afs.doc('testimonial/' + data.id).set(data);
-}
+  addTestiMonial(data: any) {
+    data.timeStamp = moment().format('x')
+    return firebase.firestore().collection('testimonial').add(data);
+  }
 
-deleteTestiMonialById(id) {
-return this.afs.doc('testimonial/' + id).delete();
-}
+  updateTestiMonial(uid: string, data: any) {
+    data.timeStamp = moment().format('x')
+    return this.afs.doc('testimonial/' + data.id).set(data);
+  }
 
-getAllTestiMonial() {
-  return new Promise((resolve) => {
-    this.firestore.collection('testimonial').snapshotChanges()
-      .subscribe(testimonial => {
-        let contactList = testimonial.map(item => {
-          return {
-            ...item.payload.doc.data() as {},
-            id: item.payload.doc.id
-          };
-        });
-        resolve(contactList);
-      })
-  })
-}
-getTestiMonialById(id: any) {
-  return new Promise((resolve) => {
-    var docRef = this.firestore.collection("testimonial").doc(id);
+  deleteTestiMonialById(id) {
+    return this.afs.doc('testimonial/' + id).delete();
+  }
 
-    docRef.ref.get().then(function(doc) {
-      if (doc.exists) {
-        let res = { ...doc.data()  as {} , id: doc.id }
-        resolve(res)
-      }
-    }).catch(function(error) {
-      resolve(null);
-    });
-  })
-}
+  getAllTestiMonial() {
+    return new Promise((resolve) => {
+      this.firestore.collection('testimonial').snapshotChanges()
+        .subscribe(testimonial => {
+          let contactList = testimonial.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
+  getTestiMonialById(id: any) {
+    return new Promise((resolve) => {
+      var docRef = this.firestore.collection("testimonial").doc(id);
 
-getTestiMonialBId(testimonialId: any) {
-  return new Promise((resolve) => {
-    this.firestore.collection('testimonial',
-      ref => ref.where('testimonialId', '==', parseInt(testimonialId))).snapshotChanges()
-      .subscribe(testimonial => {
-        let contactList = testimonial.map(item => {
-          return {
-            ...item.payload.doc.data() as {},
-            id: item.payload.doc.id
-          };
-        });
-        resolve(contactList);
-      })
-  })
-}
+      docRef.ref.get().then(function(doc) {
+        if (doc.exists) {
+          let res = { ...doc.data() as {}, id: doc.id }
+          resolve(res)
+        }
+      }).catch(function(error) {
+        resolve(null);
+      });
+    })
+  }
 
+  getTestiMonialBId(testimonialId: any) {
+    return new Promise((resolve) => {
+      this.firestore.collection('testimonial',
+        ref => ref.where('testimonialId', '==', parseInt(testimonialId))).snapshotChanges()
+        .subscribe(testimonial => {
+          let contactList = testimonial.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
+
+  createCoupons(data: any) {
+    data.timeStamp = moment().format('x')
+    return firebase.firestore().collection('coupons').add(data);
+  }
+
+  updateCoupons(uid: string, data: any) {
+    data.timeStamp = moment().format('x')
+    return this.afs.doc('coupons/' + data.id).set(data);
+  }
+
+  deleteCouponsById(id) {
+    return this.afs.doc('coupons/' + id).delete();
+  }
+
+  getAllCoupons() {
+    return new Promise((resolve) => {
+      this.firestore.collection('coupons').snapshotChanges()
+        .subscribe(coupons => {
+          let contactList = coupons.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
+  getTestiMonialById(id: any) {
+    return new Promise((resolve) => {
+      var docRef = this.firestore.collection("coupons").doc(id);
+
+      docRef.ref.get().then(function(doc) {
+        if (doc.exists) {
+          let res = { ...doc.data() as {}, id: doc.id }
+          resolve(res)
+        }
+      }).catch(function(error) {
+        resolve(null);
+      });
+    })
+  }
+
+  getTestiMonialBId(couponsId: any) {
+    return new Promise((resolve) => {
+      this.firestore.collection('coupons',
+        ref => ref.where('couponsId', '==', parseInt(couponsId))).snapshotChanges()
+        .subscribe(coupons => {
+          let contactList = coupons.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
 }

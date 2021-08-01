@@ -93,7 +93,7 @@ export class CreateCouponsComponent implements OnInit {
     this.iconTab.reset();
   }
 
-  createMonial() {
+  createCoupon() {
     console.log("form submitted");
     console.log(this.iconTab.value);
     let data = {
@@ -103,19 +103,19 @@ export class CreateCouponsComponent implements OnInit {
       createdAt: moment().format('x')
     }
     this.isLoading = true;
-    this.mentorsService.addTestiMonial(data)
+    this.mentorsService.createCoupons(data)
       .then(() => {
         this.isLoading = false;
         this.alertService.showSuccess(' added successfully !!');
         this.iconTab.reset();
         this.imageList = [];
-        this.router.navigate(['/testimonial/list']);
+        this.router.navigate(['/coupons/list']);
       })
       .catch(() => {
         this.isLoading = false;
       })
   }
-  updateTestiMonials() {
+  updateCoupon() {
     this.isLoading = true;
     let data = {
       ...this.iconTab.value,
@@ -124,11 +124,11 @@ export class CreateCouponsComponent implements OnInit {
       updatedOn: moment().format('DD-MM-YYYY hh:mm A')
     }
     console.log('data ', data);
-    this.mentorsService.updateTestiMonial(data.id, data)
+    this.mentorsService.updateCoupons(data.id, data)
       .then(() => {
         this.isLoading = false;
         this.alertService.showSuccess(' updated successfully !!')
-          this.router.navigate(['/testimonial/list']);
+          this.router.navigate(['/coupons/list']);
       })
   }
   }
