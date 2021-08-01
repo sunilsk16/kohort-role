@@ -9,35 +9,35 @@
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Event Name</th>
-              <th>Mentor Name</th>
-              <th>Description</th>
-              <th>price</th>
+              <th>Name</th>
+              <th>Specialties</th>
+              <th>Bio</th>
+              <th>Created On</th>
               <th>Action</th>
               <th>Active/Pause</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let  meetup of meetupsList; let i = index">
+            <tr *ngFor="let  monial of testiMonialList; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ meetup.name }}</td>
-              <td>{{ meetup.mentor }}</td>
-              <td>{{ meetup.description}}</td>
+              <td>{{ monial.name }}</td>
+              <td>{{ monial.specialties }}</td>
+              <td>{{ monial.bio}}</td>
               <!-- <td>{{ group.created_by ? group.created_by.displayName : '' }}</td> -->
-              <td>{{ meetup.price }}</td>
+              <td>{{ monial.created_on }}</td>
               <td>
-                <button (click)="editMeetups(meetup)" class="btn btn-sm btn-outline-info">
+                <button (click)="editTestMonial(monial)" class="btn btn-sm btn-outline-info">
                   Edit
                 </button>
               </td>
               <!-- <td>
-                <button  (click)="deleteMeetups(meetup)" class="btn btn-sm btn-outline-danger">
+                <button disabled (click)="deleteMentor(mentor)" class="btn btn-sm btn-outline-danger">
                   Delete
                 </button>
               </td> -->
               <td>
-                  <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse" (click)="toggleUser(meetup)">
-                    <i class="feather toggle-icon font-large-1 primary" [ngClass]="{'ft-toggle-left': !meetup.isActive, 'ft-toggle-right': meetup.isActive}"></i>
+                  <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse" (click)="toggleUser(monial)">
+                    <i class="feather toggle-icon font-large-1 primary" [ngClass]="{'ft-toggle-left': !monial.isActive, 'ft-toggle-right': monial.isActive}"></i>
                   </a>
                 </td>
             </tr>

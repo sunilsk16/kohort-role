@@ -72,7 +72,7 @@ export const MenuSettingsConfig: MenuConfig = {
       // },
       {
         title: 'User Management',
-        icon: 'la-user',
+        icon: 'la la-users',
         page: 'null',
         submenu: {
           items: [
@@ -102,7 +102,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Meetups',
-        icon: 'la-user',
+        icon: 'la la-forumbee',
         page: 'null',
         submenu: {
           items: [
@@ -119,7 +119,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Mentors',
-        icon: 'la-user',
+        icon: 'la la-user-plus',
         page: 'null',
         submenu: {
           items: [
@@ -130,6 +130,40 @@ export const MenuSettingsConfig: MenuConfig = {
             {
               title: 'Mentors List',
               page: '/mentors/list',
+            },
+          ]
+        }
+      },
+      {
+        title: 'Testimonial',
+        icon: 'la la-empire',
+        page: 'null',
+        submenu: {
+          items: [
+            {
+              title: 'New Testimonial',
+              page: '/testimonial/create',
+            },
+            {
+              title: 'Testimonial List',
+              page: '/testimonial/list',
+            },
+          ]
+        }
+      },
+      {
+        title: 'Coupons',
+        icon: 'la la-empire',
+        page: 'null',
+        submenu: {
+          items: [
+            {
+              title: 'Create Coupons',
+              page: '/coupons/create',
+            },
+            {
+              title: 'Coupons List',
+              page: '/coupons/list',
             },
           ]
         }

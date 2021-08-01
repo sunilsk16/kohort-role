@@ -33,7 +33,11 @@ const appRoutes: Routes = [
       { path: 'meetups', loadChildren: () => import('../app/content/meetups/meetups.module').then(m => m.MeetupsModule)
       , canActivate: [AuthGuard] },
       { path: 'mentors', loadChildren: () => import('../app/content/mentors/mentors.module').then(m => m.MentorsModule)
-      , canActivate: [AuthGuard] }
+      , canActivate: [AuthGuard] },
+      { path: 'testimonial', loadChildren: () => import('../app/content/testimonials/testimonials.module').then(m => m.TestimonialsModule)
+      , canActivate: [AuthGuard] },
+      { path: 'coupons', loadChildren: () => import('../app/content/coupons/coupons.module').then(m => m.CouponsModule)
+      , canActivate: [AuthGuard] },
     ],
   },
   // otherwise redirect to home

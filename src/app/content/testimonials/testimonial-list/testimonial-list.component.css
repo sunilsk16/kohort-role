@@ -1,0 +1,23 @@
+:host ::ng-deep .btn.btn-social-icon {
+    padding: unset !important;
+}
+:host ::ng-deep .custom-ctr {
+  background: white;
+
+padding: 5px;
+
+}
+:host ::ng-deep .add-btn {
+  float: right;
+  margin-top: -5%;
+  position: relative;
+}
+
+.txt-capitalize {
+  text-transform:capitalize;
+}
+
+.error {
+      font-size:10px;
+      color:red;
+}

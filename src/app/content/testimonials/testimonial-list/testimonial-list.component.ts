@@ -10,22 +10,18 @@ import { MentorService } from '../../../_services/mentors/mentor.service';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
-  selector: 'app-mentors-list',
-  templateUrl: './mentors-list.component.html',
-  styleUrls: ['./mentors-list.component.css']
+  selector: 'app-testimonial-list',
+  templateUrl: './testimonial-list.component.html',
+  styleUrls: ['./testimonial-list.component.css']
 })
-export class MentorsListComponent implements OnInit {
-  mentorList: any;
+export class TestimonialListComponent implements OnInit {
+  testiMonialList: any;
   isActive: any;
-  breadcrumb: any;
-  mentor: any = {
+    public breadcrumb: any;
+  testMonial: any = {
     name: '',
     bio: '',
-    facebook: '',
-    website: '',
-    twitter: '',
-    instagram: '',
-
+    specialties: '',
   }
   constructor( private mentorService: MentorService,
     private router: Router,
@@ -34,7 +30,7 @@ export class MentorsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadcrumb = {
-      'mainlabel': 'Mentor List',
+      'mainlabel': 'Testimonial List',
       'links': [
         {
           'name': 'Home',
@@ -48,22 +44,22 @@ export class MentorsListComponent implements OnInit {
       ]
     };
 
-
-    this.mentorService.getAllMentors()
+    this.mentorService.getAllTestiMonial()
   .then((res:any) =>{
-   console.log('mentorList ', res);
-     this.mentorList = res;
+   console.log('TestiMonial ', res);
+     this.testiMonialList = res;
     })
   }
 
-  editMentor(data) {
-  this.router.navigate(['/mentors/edit', data.id]);
+  editTestMonial(data) {
+      console.log('edit ', data);
+  this.router.navigate(['/testimonial/edit', data.id]);
 }
 
 
-deleteMeetups(data:any){
+deleteTestMonial(data:any){
   console.log('delete ', data);
-  this.mentorService.deleteMentorById(data.id);
+  this.mentorService.deleteTestiMonialById(data.id);
 }
 
 toggleUser(data) {
@@ -75,7 +71,7 @@ toggleUser(data) {
     .then((result) => {
       if (result.isConfirmed) {
         data.isActive = !data.isActive;
-        this.mentorService.updateMentor(data.id, data)
+        this.mentorService.updateTestiMonial(data.id, data)
           .then(() => {
             let msg = data.isActive ? ' activated successfully !!' : ' deactivated successfully !!'
             this.alertService.showSuccess(msg)

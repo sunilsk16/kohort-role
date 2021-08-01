@@ -149,7 +149,7 @@ imageList: any = [];
         this.alertService.showSuccess('Mentor added successfully !!');
         this.iconTab.reset();
         this.imageList = [];
-        // this.router.navigate(['/h/master/banquet']);
+        this.router.navigate(['/mentor/list']);
       })
       .catch(() => {
         this.isLoading = false;
@@ -170,6 +170,7 @@ imageList: any = [];
         .then(() => {
           this.isLoading = false;
           this.alertService.showSuccess('Mentor updated successfully !!')
+            this.router.navigate(['/mentor/list']);
         })
     }
 

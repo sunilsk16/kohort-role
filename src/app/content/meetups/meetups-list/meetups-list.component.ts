@@ -18,6 +18,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class MeetupsListComponent implements OnInit {
 isActive: any;
   meetupsList: any;
+  breadcrumb: any;
   meetup: any = {
     name: '',
     description: '',
@@ -33,6 +34,21 @@ isActive: any;
   { }
 
   ngOnInit(): void {
+    this.breadcrumb = {
+      'mainlabel': 'Meetups List',
+      'links': [
+        {
+          'name': 'Home',
+          'isLink': true,
+          'link': '/dashboard'
+        },
+        {
+          'name': 'List',
+          'isLink': false,
+        },
+      ]
+    };
+
 
     this.meetupService.getAllMeetups()
   .then((res:any) =>{
@@ -55,7 +71,7 @@ isActive: any;
 
   toggleUser(data) {
     Swal.fire({
-      title: 'Do you want to ' + (!data.isActive ? 'Activate' : 'Deactivate') + ' the Corporate?',
+      title: 'Do you want to ' + (!data.isActive ? 'Activate' : 'Deactivate') + ' the ?',
       showCancelButton: true,
       confirmButtonText: `Continue`,
     })
@@ -64,7 +80,7 @@ isActive: any;
           data.isActive = !data.isActive;
           this.meetupService.updateMeetups(data.id, data)
             .then(() => {
-              let msg = data.isActive ? 'Corporate activated successfully !!' : 'Corporate deactivated successfully !!'
+              let msg = data.isActive ? ' activated successfully !!' : ' deactivated successfully !!'
               this.alertService.showSuccess(msg)
             })
             .catch(() => {

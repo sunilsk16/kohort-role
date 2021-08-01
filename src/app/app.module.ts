@@ -67,7 +67,7 @@ import { BlockTemplateComponent } from './_layout/blockui/block-template.compone
 import { BlockUIModule } from 'ng-block-ui';
 import { MatchHeightModule } from './content/partials/general/match-height/match-height.module';
 import { FullLayoutComponent } from './_layout/full-layout/full-layout.component';
-import { ShowForModule } from './content/partials/general/show-for/show-for.module';
+import { ShowForModule } from './content/partials/general/show-for/show-for.module';;
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -121,7 +121,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomizerComponent,
     HorizontalCustomizerComponent,
     BlockTemplateComponent,
-    FullLayoutComponent
+    FullLayoutComponent,
+  
   ],
   providers: [
     AuthGuard,
