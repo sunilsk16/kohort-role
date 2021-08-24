@@ -27,6 +27,7 @@ export class CreateCouponsComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   iconTab: FormGroup;
   monialId: any;
+  submitted = false;
 
   constructor(private formBuilder: FormBuilder,
     private mentorsService: MentorService,
@@ -94,6 +95,13 @@ export class CreateCouponsComponent implements OnInit {
   }
 
   createCoupon() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.iconTab.invalid) {
+      this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+      return;
+    }
     console.log("form submitted");
     console.log(this.iconTab.value);
     let data = {

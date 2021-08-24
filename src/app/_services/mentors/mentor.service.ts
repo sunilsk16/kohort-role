@@ -181,34 +181,5 @@ export class MentorService {
         })
     })
   }
-  getTestiMonialById(id: any) {
-    return new Promise((resolve) => {
-      var docRef = this.firestore.collection("coupons").doc(id);
 
-      docRef.ref.get().then(function(doc) {
-        if (doc.exists) {
-          let res = { ...doc.data() as {}, id: doc.id }
-          resolve(res)
-        }
-      }).catch(function(error) {
-        resolve(null);
-      });
-    })
-  }
-
-  getTestiMonialBId(couponsId: any) {
-    return new Promise((resolve) => {
-      this.firestore.collection('coupons',
-        ref => ref.where('couponsId', '==', parseInt(couponsId))).snapshotChanges()
-        .subscribe(coupons => {
-          let contactList = coupons.map(item => {
-            return {
-              ...item.payload.doc.data() as {},
-              id: item.payload.doc.id
-            };
-          });
-          resolve(contactList);
-        })
-    })
-  }
 }

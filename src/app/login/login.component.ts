@@ -88,7 +88,20 @@ export class LoginComponent implements OnInit {
               if (this.returnUrl) {
                 returnUrl = this.returnUrl;
               }
-              this.router.navigate([returnUrl]);
+              this.userService
+              .getUserRole(this.currentUser.roleValue)
+              .subscribe((res: any) => {
+                console.log("curr user permissions ", res);
+
+                if (res && res.length) {
+                  window.localStorage.setItem(
+                    "permissions",
+                    JSON.stringify(res[0].permissions)
+                  );
+                  this.router.navigate([returnUrl]);
+                }
+            
+              });
             } else {
               this.spinner.hide();
               this.submitted = false;

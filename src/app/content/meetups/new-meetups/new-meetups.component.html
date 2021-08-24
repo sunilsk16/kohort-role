@@ -12,106 +12,128 @@
           <section id="icon-tabs">
             <div class="row">
               <div class="col-12" *blockUI="'iconTabs'; message: 'Loading'">
-                <form [formGroup]="iconTab" >
-                            <div class="row">
-                              <div class='col-md-6'>
-                                <!-- <h2>Basic Details</h2> -->
-                                <!-- <div class="form-group">
+                <form [formGroup]="iconTab">
+                  <div class="row">
+                    <div class='col-md-6'>
+                      <!-- <h2>Basic Details</h2> -->
+                      <!-- <div class="form-group">
                                   <label class="form-control-label" for="corpID">Mentor ID :</label>
                                   <input class="form-control" type="text" formControlName="corpID" />
 
                                 </div> -->
-                                <div class="form-group">
-                                  <label class="form-control-label" for="clientName">Event Name :</label>
-                                  <input class="form-control" type="text" formControlName="name" />
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="clietType">Mentor :</label>
-                                  <select class="form-control input-md" formControlName="mentor" >
-                                    <option *ngFor="let mentor of mentorList" [value]="mentor.name">{{mentor.name}}</option>
-                                  </select>
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subModel">Description :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="description"></textarea>
+                      <div class="form-group">
+                        <label class="form-control-label" for="clientName">Event Name :</label>
+                        <input class="form-control" type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                          <div *ngIf="f.name.errors.required">Event Name is required</div>
+                        </div>
+                      </div>
 
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">About :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="about"></textarea>
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">Price :</label>
-                                  <input class="form-control" type="text" formControlName="price" />
-                                </div>
-                              </div>
-                              <div class='col-md-6'>
+                    <div class="form-group">
+                      <label class="form-control-label" for="clietType">Mentor :</label>
+                      <select class="form-control input-md" [ngModel]="selectedValue" (ngModelChange)="onDropdownChange($event)" formControlName="mentor" [ngClass]="{ 'is-invalid': submitted && f.mentor.errors }" >
+                        <option *ngFor="let mentor of mentorList" [ngValue]="mentor.id">{{mentor.name}}</option>
+                      </select>
+                      <div *ngIf="submitted && f.mentor.errors" class="invalid-feedback">
+                        <div *ngIf="f.mentor.errors.required">Mentor is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label" for="subModel">Description :</label>
+                      <textarea rows="2" cols="80" class="form-control" type="text" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" ></textarea>
+                      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label" for="subDate">About :</label>
+                      <textarea rows="2" cols="80" class="form-control" type="text" formControlName="about" [ngClass]="{ 'is-invalid': submitted && f.about.errors }" ></textarea>
+                      <div *ngIf="submitted && f.about.errors" class="invalid-feedback">
+                        <div *ngIf="f.about.errors.required">About is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label" for="subDate">Price :</label>
+                      <input class="form-control" type="text" formControlName="price" [ngClass]="{ 'is-invalid': submitted && f.price.errors }"  />
+                      <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                        <div *ngIf="f.price.errors.required">Price is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group">
+                      <label class="form-control-label" for="dates">Date :</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="dd-mm-yyyy" [minDate]="currMinDate" [maxDate]="currMaxDate" formControlName="dates"
+                        [ngClass]="{ 'is-invalid': submitted && f.dates.errors }"   (dateSelect)="selectDate($event)" ngbDatepicker #d4="ngbDatepicker">
+                        <div class="input-group-append">
+                          <div class="input-group-text" (click)="d4.toggle()">
+                            <i class="fa fa-calendar" style="cursor: pointer;"></i>
+                          </div>
+                        </div>
+                        <div *ngIf="submitted && f.dates.errors" class="invalid-feedback">
+                          <div *ngIf="f.dates.errors.required">Date is required</div>
+                        </div>
+                      </div>
 
+                    </div>
 
-                                <div class="form-group">
-                                <label class="form-control-label" for="dates">Date :</label>
-                                <div class="input-group">
-                                  <input class="form-control"  placeholder="dd-mm-yyyy" [minDate]="currMinDate" [maxDate]="currMaxDate"
-                                    formControlName="dates" [value]="iconTab.value.dates" (dateSelect)="selectDate($event)" ngbDatepicker #d4="ngbDatepicker">
-                                  <div class="input-group-append">
-                                    <div class="input-group-text" (click)="d4.toggle()">
-                                      <i class="fa fa-calendar" style="cursor: pointer;"></i>
-                                    </div>
-                                  </div>
-
-                                </div>
-                              </div>
-
-                                <div class="form-group">
-                                    <label class="form-control-label" for="startTime">Start Time:</label>
-                                    <ngb-timepicker formControlName="startTime"  meridian=true></ngb-timepicker>
-
-                                  </div>
-                                  <div class="form-group">
-                                    <label class="form-control-label" for="endTime">End Time:</label>
-                                    <ngb-timepicker formControlName="endTime"   meridian="meridian">
-                                    </ngb-timepicker>
-                                  </div>
-                                <!-- <div class="photo-upload">
+                    <div class="form-group">
+                      <label class="form-control-label" for="startTime">Start Time:</label>
+                      <ngb-timepicker formControlName="startTime" meridian=true [ngClass]="{ 'is-invalid': submitted && f.startTime.errors }"
+                      ></ngb-timepicker>
+                      <div *ngIf="submitted && f.startTime.errors" class="invalid-feedback">
+                        <div *ngIf="f.startTime.errors.required">Start Time is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label" for="endTime">End Time:</label>
+                      <ngb-timepicker formControlName="endTime" meridian="meridian" [ngClass]="{ 'is-invalid': submitted && f.endTime.errors }" >
+                      </ngb-timepicker>
+                      <div *ngIf="submitted && f.endTime.errors" class="invalid-feedback">
+                        <div *ngIf="f.endTime.errors.required">End Time is required</div>
+                      </div>
+                    </div>
+                    <!-- <div class="photo-upload">
                             <p class="logo-text">Upload Photos</p>
                             <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" />
                           </div> -->
-                          <!-- <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" /> -->
+                    <!-- <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" /> -->
 
-                          <form ngNoForm style="display:none">
-                            <input id="avatar" name="file" type="file" (change)="upload()" />
-                          </form>
-                          <br />
-                          <br />
+                    <form ngNoForm style="display:none">
+                      <input id="avatar" name="file" type="file" (change)="upload()" />
+                    </form>
+                    <br />
+                    <br />
 
-                          <div class="row">
-                            <div class="column" *ngFor='let url of imageList; let i of index'>
-                              <img [src]="url" alt="Snow" class="img-holder" style="width:100%">
-                              <button class="btn btn-outline-danger" (click)="removeImage(i)">Remove</button>
-                            </div>
-                          </div>
-                              </div>
-                            </div>
-                            <div class="form-group text-center">
-                              <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createMeetups(iconTab.value)">
-                              <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
-                              Submit
-                            </button>
-                            <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateMeetup(iconTab.value)">
-                            <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
-                            Update
-                          </button>
-                            </div>
-                            <button routerLink="/a/subscription/view-subscription" class="btn btn-outline-secondary secondary add-btn" style="float:'right';">
-                              Close
-                            </button>
-                          </form>
-
+                    <div class="row">
+                      <div class="column" *ngFor='let url of imageList; let i of index'>
+                        <img [src]="url" alt="Snow" class="img-holder" style="width:100%">
+                        <button class="btn btn-outline-danger" (click)="removeImage(i)">Remove</button>
+                      </div>
+                    </div>
+                  </div>
               </div>
+              <div class="form-group text-center">
+                <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createMeetups(iconTab.value)">
+                  <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                  Submit
+                </button>
+                <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateMeetup(iconTab.value)">
+                  <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                  Update
+                </button>
+              </div>
+              <button routerLink="/a/subscription/view-subscription" class="btn btn-outline-secondary secondary add-btn" style="float:'right';">
+                Close
+              </button>
+              </form>
+
             </div>
-          </section>
         </div>
+        </section>
       </div>
     </div>
   </div>
+</div>
 </div>

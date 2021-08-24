@@ -24,10 +24,13 @@ export class NewTestimonialComponent implements OnInit {
   @BlockUI('iconTabs') blockUIIconTabs: NgBlockUI;
   public breadcrumb: any;
   viewSubscriptionList: any = [];
+    mentorList: any = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   iconTab: FormGroup;
   monialId: any;
+  submitted = false;
+  mentorId: any;
 
   constructor(private formBuilder: FormBuilder,
     private mentorsService: MentorService,
@@ -59,6 +62,7 @@ export class NewTestimonialComponent implements OnInit {
       name: ['', Validators.required],
       specialties: ['', Validators.required],
       bio: ['', Validators.required],
+      mentor: ['', Validators.required],
     });
 
     if (this.route.snapshot.params.id) {
@@ -74,11 +78,23 @@ export class NewTestimonialComponent implements OnInit {
           }
         })
     }
+    this.mentorsService.getAllMentors()
+      .then((res: any) => {
+        console.log('mentorList ', res);
+        this.mentorList = res;
+
+        // this.mentorLists =  mentorList.name || [];
+        // console.log('mentorListnnnnnn ',   this.mentorList);
+      })
   }
 
   get f() {
     return this.iconTab.controls;
   }
+  onDropdownChange(e){
+  console.log(e)//you will get the id
+  this.mentorId =e //if you want to bind it to your model
+}
 
   reloadIconTabs() {
     this.blockUIIconTabs.start('Loading..');
@@ -125,10 +141,20 @@ export class NewTestimonialComponent implements OnInit {
   }
 
   createMonial() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.iconTab.invalid) {
+      this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+      return;
+    }
+
+
     console.log("form submitted");
     console.log(this.iconTab.value);
     let data = {
       ...this.iconTab.value,
+      mentorId: this.mentorId,
       createdBy: this.loggedInUser,
       createdOn: moment().format('DD-MM-YYYY hh:mm A'),
       createdAt: moment().format('x')
@@ -150,6 +176,7 @@ export class NewTestimonialComponent implements OnInit {
     this.isLoading = true;
     let data = {
       ...this.iconTab.value,
+      mentorId: this.mentorId,
       id: this.monialId,
       updatedBy: this.loggedInUser,
       updatedOn: moment().format('DD-MM-YYYY hh:mm A')

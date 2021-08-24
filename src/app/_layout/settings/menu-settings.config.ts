@@ -4,6 +4,7 @@ export interface MenuItem {
   title: string;
   icon: string;
   page: string;
+  roleValue?: string;
   isExternalLink?: boolean;
   issupportExternalLink?: boolean;
   isStarterkitExternalLink?: boolean;
@@ -25,6 +26,7 @@ export const MenuSettingsConfig: MenuConfig = {
     items: [
       {
         title: 'Home',
+        roleValue: "MEETUPS_VIEW",
         icon: 'la-home',
         page: '/dashboard'
       },
@@ -72,6 +74,7 @@ export const MenuSettingsConfig: MenuConfig = {
       // },
       {
         title: 'User Management',
+        roleValue: 'USER_MANAGEMENT_VIEW',
         icon: 'la la-users',
         page: 'null',
         submenu: {
@@ -85,6 +88,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Role Management',
+        roleValue: 'ROLE_MANAGEMENT_VIEW',
         icon: 'la-user',
         page: 'null',
         submenu: {
@@ -102,6 +106,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Meetups',
+        roleValue: 'MEETUPS_VIEW',
         icon: 'la la-forumbee',
         page: 'null',
         submenu: {
@@ -119,6 +124,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Mentors',
+        roleValue: 'MENTORS_VIEW',
         icon: 'la la-user-plus',
         page: 'null',
         submenu: {
@@ -136,6 +142,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Testimonial',
+        roleValue: 'MENTORS_VIEW',
         icon: 'la la-empire',
         page: 'null',
         submenu: {
@@ -153,6 +160,7 @@ export const MenuSettingsConfig: MenuConfig = {
       },
       {
         title: 'Coupons',
+       roleValue: 'MENTORS_VIEW',
         icon: 'la la-empire',
         page: 'null',
         submenu: {

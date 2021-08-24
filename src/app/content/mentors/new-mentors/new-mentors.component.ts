@@ -18,6 +18,7 @@ import * as moment from 'moment';
 })
 export class NewMentorsComponent implements OnInit {
 loggedInUser: any;
+  submitted = false;
 isLoading: any = false;
 isEdit: any = false;
 images = [];
@@ -131,6 +132,14 @@ imageList: any = [];
   }
 
   createMentor() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.iconTab.invalid) {
+      this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+      return;
+    }
+    
     console.log("form submitted");
     console.log(this.iconTab.value);
     let data = {

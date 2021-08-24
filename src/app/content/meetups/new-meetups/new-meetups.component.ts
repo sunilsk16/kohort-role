@@ -16,7 +16,8 @@ import * as moment from 'moment';
   styleUrls: ['./new-meetups.component.css']
 })
 export class NewMeetupsComponent implements OnInit {
-
+  registerForm: FormGroup;
+    submitted = false;
   loggedInUser: any;
   isLoading: any = false;
   isEdit: any = false;
@@ -32,6 +33,8 @@ export class NewMeetupsComponent implements OnInit {
   private mentorLists: Array<any> = [];
   mentorList: any;
   d4: any;
+  mentorId: any;
+
 
   constructor(private formBuilder: FormBuilder,
     private meetupService: MeetupService,
@@ -60,6 +63,10 @@ export class NewMeetupsComponent implements OnInit {
         },
       ]
     };
+    // this.registerForm = this.formBuilder.group({
+    //     password: ['', Validators.required],
+    //     comparepassword: ['', ]
+    //   });
 
     this.iconTab = this.formBuilder.group({
       // corpID: ['', Validators.required],
@@ -91,14 +98,16 @@ export class NewMeetupsComponent implements OnInit {
       .then((res: any) => {
         console.log('mentorList ', res);
         this.mentorList = res;
+
         // this.mentorLists =  mentorList.name || [];
         // console.log('mentorListnnnnnn ',   this.mentorList);
       })
   }
 
-  get f() {
-    return this.iconTab.controls;
-  }
+  onDropdownChange(e){
+  console.log(e)//you will get the id
+  this.mentorId =e //if you want to bind it to your model
+}
 
   reloadIconTabs() {
     this.blockUIIconTabs.start('Loading..');
@@ -117,6 +126,17 @@ export class NewMeetupsComponent implements OnInit {
   chooseFile() {
     document.getElementById("avatar").click();
   }
+
+  //  comparepassword(control: AbstractControl): ValidationErrors {
+  //   if (control.parent != undefined) {
+  //     var password: string = control.parent.get("password").value;
+  //     var cpassword: string = control.parent.get("comparepassword").value;
+  //     if (password !== cpassword) {
+  //       return { matchPassword: true };
+  //     }
+  //   }
+  //   return null;
+  // }
 
   upload() {
     // Create a root reference
@@ -155,32 +175,85 @@ export class NewMeetupsComponent implements OnInit {
     this["dates"] = finalDate;
   }
 
-  createMeetups() {
-    console.log("form submitted");
-    console.log(this.iconTab.value);
-    let data = {
-      ...this.iconTab.value,
-      // tenantId: this.currOrganization.tenantId,
-      // hotelId: this.currOrganization.id,
-      // hotelData: this.currOrganization,
-      createdBy: this.loggedInUser,
-      createdOn: moment().format('DD-MM-YYYY hh:mm A'),
-      createdAt: moment().format('x')
-    }
-    this.isLoading = true;
-    this.meetupService.addMeetups(data)
-      .then(() => {
-        this.isLoading = false;
-        this.alertService.showSuccess('Meetups added successfully !!');
-        this.iconTab.reset();
-        this.imageList = [];
-        this.router.navigate(['/meetups/list']);
-        // this.router.navigate(['/h/master/banquet']);
-      })
-      .catch(() => {
-        this.isLoading = false;
-      })
-  }
+  get f() {
+     return this.iconTab.controls;
+   }
+
+   // get j() {
+   //    return this.registerForm.controls;
+   //  }
+
+    createMeetups() {
+        this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.iconTab.invalid) {
+          this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+          return;
+        }
+
+        console.log("form submitted");
+        console.log(this.iconTab.value);
+        let data = {
+          ...this.iconTab.value,
+          // tenantId: this.currOrganization.tenantId,
+          // hotelId: this.currOrganization.id,
+          // hotelData: this.currOrganization,
+          mentorId: this.mentorId,
+          createdBy: this.loggedInUser,
+          createdOn: moment().format('DD-MM-YYYY hh:mm A'),
+          createdAt: moment().format('x')
+        }
+        this.isLoading = true;
+        this.meetupService.addMeetups(data)
+          .then(() => {
+            this.isLoading = false;
+            this.alertService.showSuccess('Meetups added successfully !!');
+            this.iconTab.reset();
+            this.imageList = [];
+            this.router.navigate(['/meetups/list']);
+            // this.router.navigate(['/h/master/banquet']);
+          })
+          .catch(() => {
+            this.isLoading = false;
+          })
+      }
+
+
+  // createMeetups() {
+  //
+  //   if(!this.iconTab.value.name || !this.iconTab.value.description  || !this.iconTab.value.about
+  //      || !this.iconTab.value.price  || !this.iconTab.value.mentor || !this.iconTab.value.startTime
+  //      || !this.iconTab.value.endTime || !this.iconTab.value.dates
+  //   ) {
+  //     this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+  //     return false;
+  //   }
+  //   console.log("form submitted");
+  //   console.log(this.iconTab.value);
+  //   let data = {
+  //     ...this.iconTab.value,
+  //     // tenantId: this.currOrganization.tenantId,
+  //     // hotelId: this.currOrganization.id,
+  //     // hotelData: this.currOrganization,
+  //     createdBy: this.loggedInUser,
+  //     createdOn: moment().format('DD-MM-YYYY hh:mm A'),
+  //     createdAt: moment().format('x')
+  //   }
+  //   this.isLoading = true;
+  //   this.meetupService.addMeetups(data)
+  //     .then(() => {
+  //       this.isLoading = false;
+  //       this.alertService.showSuccess('Meetups added successfully !!');
+  //       this.iconTab.reset();
+  //       this.imageList = [];
+  //       this.router.navigate(['/meetups/list']);
+  //       // this.router.navigate(['/h/master/banquet']);
+  //     })
+  //     .catch(() => {
+  //       this.isLoading = false;
+  //     })
+  // }
 
   updateMeetup() {
     this.isLoading = true;

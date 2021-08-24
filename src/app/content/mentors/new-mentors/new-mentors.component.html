@@ -22,22 +22,34 @@
                                   <input class="form-control" type="text" formControlName="corpID" />
 
                                 </div> -->
+
                                 <div class="form-group">
                                   <label class="form-control-label" for="clientName">Name :</label>
-                                  <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name"/>
+                                  <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
+                                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.name.errors.required">Name is required</div>
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                   <label class="form-control-label" for="clietType">Specialties :</label>
-                                  <input class="form-control" type="text" formControlName="specialties" />
+                                  <input class="form-control" type="text" formControlName="specialties" [ngClass]="{ 'is-invalid': submitted && f.specialties.errors }"/>
+                                  <div *ngIf="submitted && f.specialties.errors" class="invalid-feedback">
+                                    <div *ngIf="f.specialties.errors.required">Specialties is required</div>
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                   <label class="form-control-label" for="subModel">Bio :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="bio"></textarea>
-
+                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="bio" [ngClass]="{ 'is-invalid': submitted && f.bio.errors }"></textarea>
+                                  <div *ngIf="submitted && f.bio.errors" class="invalid-feedback">
+                                    <div *ngIf="f.bio.errors.required">Bio is required</div>
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                   <label class="form-control-label" for="subDate">Achievement :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="achievement"></textarea>
+                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="achievement" [ngClass]="{ 'is-invalid': submitted && f.achievement.errors }"></textarea>
+                                  <div *ngIf="submitted && f.achievement.errors" class="invalid-feedback">
+                                    <div *ngIf="f.achievement.errors.required">Achievement is required</div>
+                                  </div>
                                 </div>
                                 <div class="form-group">
                                 <div class="photo-upload">

@@ -20,7 +20,7 @@
 					data-original-title="Support"></i>
 
 				<!-- Root Menu -->
-				<a *ngIf="child.title && !child.submenu && !child.excludeInVertical && !child.isExternalLink && !child.issupportExternalLink"
+				<a  [showFor]="child.roleValue" *ngIf="child.title && !child.submenu && !child.excludeInVertical && !child.isExternalLink && !child.issupportExternalLink"
 					routerLink="{{child.page != 'null'?child.page:router.url}}" (click)="toggleMenu($event, child)">
 					<i class="la" [ngClass]="child.icon"></i>
 					<span class="menu-title" data-i18n="">{{child.title}}</span>
@@ -41,7 +41,7 @@
 
 
 				<!-- Submenu -->
-				<a *ngIf="child.title && child.submenu && !child.excludeInVertical"
+				<a *ngIf="child.title && child.submenu && !child.excludeInVertical"  [showFor]="child.roleValue"
 					routerLink="{{child.page != 'null'?child.page:router.url}}" (click)="toggleMenu($event, child)">
 					<i class="la" [ngClass]="child.icon"></i>
 					<span class="menu-title" data-i18n="">{{child.title}}</span>

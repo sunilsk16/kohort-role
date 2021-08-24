@@ -17,13 +17,19 @@
                     <div class='col-md-6'>
                       <div class="form-group">
                         <label class="form-control-label" for="clientName">Name :</label>
-                        <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name" />
+                        <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                          <div *ngIf="f.name.errors.required">Event Name is required</div>
+                        </div>
                       </div>
                     </div>
                     <div class='col-md-6'>
                       <div class="form-group">
-                        <label class="form-control-label" for="clietType">Minimum Billing Amount :</label>
-                        <input class="form-control" type="number" formControlName="minBilligAmt" />
+                        <label class="form-control-label" for="clietType">Min Billig Amount:</label>
+                        <input class="form-control" type="number" formControlName="minBilligAmt" [value]="iconTab.value.minBilligAmt" [ngClass]="{ 'is-invalid': submitted && f.minBilligAmt.errors }"/>
+                        <div *ngIf="submitted && f.minBilligAmt.errors" class="invalid-feedback">
+                          <div *ngIf="f.minBilligAmt.errors.required">Min Billig Amount is required</div>
+                        </div>
                       </div>
                     </div>
 
