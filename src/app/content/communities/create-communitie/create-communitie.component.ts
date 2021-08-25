@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormControl, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { MeetupService } from '../../../_services/meetups/meetup.service';
 import { MentorService } from '../../../_services/mentors/mentor.service';
 import { AlertService } from '../../../_services/alert.service';
 import { ActivatedRoute } from '@angular/router'
@@ -9,12 +10,15 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
 
+
 @Component({
-  selector: 'app-create-coupons',
-  templateUrl: './create-coupons.component.html',
-  styleUrls: ['./create-coupons.component.css']
+  selector: 'app-create-communitie',
+  templateUrl: './create-communitie.component.html',
+  styleUrls: ['./create-communitie.component.css']
 })
-export class CreateCouponsComponent implements OnInit {
+export class CreateCommunitieComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
   loggedInUser: any;
   isLoading: any = false;
   isEdit: any = false;
@@ -26,10 +30,15 @@ export class CreateCouponsComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   iconTab: FormGroup;
-  monialId: any;
-  submitted = false;
+  communitieId: any;
+  private mentorLists: Array<any> = [];
+  mentorList: any;
+  d4: any;
+  mentorId: any;
+
 
   constructor(private formBuilder: FormBuilder,
+    private meetupService: MeetupService,
     private mentorsService: MentorService,
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -41,7 +50,7 @@ export class CreateCouponsComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadcrumb = {
-      'mainlabel': 'Create Coupons',
+      'mainlabel': 'Create Communities',
       'links': [
         {
           'name': 'Home',
@@ -49,35 +58,46 @@ export class CreateCouponsComponent implements OnInit {
           'link': '/dashboard'
         },
         {
-          'name': 'Coupons',
+          'name': 'Communities',
           'isLink': false,
+          'link': '/communitie/create'
         },
       ]
     };
+    // this.registerForm = this.formBuilder.group({
+    //     password: ['', Validators.required],
+    //     comparepassword: ['', ]
+    //   });
 
     this.iconTab = this.formBuilder.group({
       name: ['', Validators.required],
-      minBilligAmt: ['', Validators.required],
+      description: ['', Validators.required],
 
     });
-
     if (this.route.snapshot.params.id) {
-      this.mentorsService.getCouponsById(this.route.snapshot.params.id)
+      this.mentorsService.getCommunitieById(this.route.snapshot.params.id)
         .then((res: any) => {
-          this.isEdit = true;
-          this.monialId = res.id;
-          this.imageList = res.fileSource || [];
-          console.log("img", this.imageList);
-          console.log('edit Mentor ', res);
+          this.isEdit = true
+          this.communitieId = res.id
+          console.log('edit Meetups ', res);
           if (res && res.id) {
             this.iconTab.patchValue(res);
           }
         })
     }
+    this.mentorsService.getAllMentors()
+      .then((res: any) => {
+        console.log('mentorList ', res);
+        this.mentorList = res;
+
+        // this.mentorLists =  mentorList.name || [];
+        // console.log('mentorListnnnnnn ',   this.mentorList);
+      })
   }
 
-  get f() {
-    return this.iconTab.controls;
+  onDropdownChange(e) {
+    console.log(e)//you will get the id
+    this.mentorId = e //if you want to bind it to your model
   }
 
   reloadIconTabs() {
@@ -94,7 +114,26 @@ export class CreateCouponsComponent implements OnInit {
     this.iconTab.reset();
   }
 
-  createCoupon() {
+  chooseFile() {
+    document.getElementById("avatar").click();
+  }
+  selectDate(event) {
+    console.log(event);
+    let year = event.year;
+    let month = event.month <= 9 ? '0' + event.month : event.month;;
+    let day = event.day <= 9 ? '0' + event.day : event.day;;
+    let finalDate = day + "-" + month + "-" + year;
+    this.iconTab.patchValue({
+      dates: finalDate
+    })
+    this["dates"] = finalDate;
+  }
+
+  get f() {
+    return this.iconTab.controls;
+  }
+
+  createCommunities() {
     this.submitted = true;
 
     // stop here if form is invalid
@@ -102,41 +141,46 @@ export class CreateCouponsComponent implements OnInit {
       this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
       return;
     }
+
     console.log("form submitted");
     console.log(this.iconTab.value);
     let data = {
       ...this.iconTab.value,
+      // mentorId: this.mentorId,
       createdBy: this.loggedInUser,
       createdOn: moment().format('DD-MM-YYYY hh:mm A'),
       createdAt: moment().format('x')
     }
     this.isLoading = true;
-    this.mentorsService.createCoupons(data)
+    this.mentorsService.addCommunitie(data)
       .then(() => {
         this.isLoading = false;
-        this.alertService.showSuccess(' added successfully !!');
+        this.alertService.showSuccess('Communitie added successfully !!');
         this.iconTab.reset();
         this.imageList = [];
-        this.router.navigate(['/coupons/list']);
+        this.router.navigate(['/communitie/list']);
+        // this.router.navigate(['/h/master/banquet']);
       })
       .catch(() => {
         this.isLoading = false;
       })
   }
-  updateCoupon() {
+  updateCommunities() {
     this.isLoading = true;
     let data = {
       ...this.iconTab.value,
-      id: this.monialId,
+      id: this.communitieId,
       updatedBy: this.loggedInUser,
       updatedOn: moment().format('DD-MM-YYYY hh:mm A')
     }
     console.log('data ', data);
-    this.mentorsService.updateCoupons(data.id, data)
+    this.mentorsService.updateCommunitie(data.id, data)
       .then(() => {
         this.isLoading = false;
-        this.alertService.showSuccess(' updated successfully !!')
-          this.router.navigate(['/coupons/list']);
+        this.alertService.showSuccess('Meetups updated successfully !!')
+        this.router.navigate(['/communitie/list']);
       })
   }
-  }
+
+
+}

@@ -10,7 +10,8 @@
             <tr>
               <th>Sl</th>
               <th>Name</th>
-              <th>Minimum Amount</th>
+              <th>Description</th>
+              <!-- <th>Created On</th> -->
               <th>Action</th>
               <th>Active/Pause</th>
             </tr>
@@ -19,7 +20,8 @@
             <tr *ngFor="let  mentor of mentorList; let i = index">
               <td>{{ i + 1 }}</td>
               <td>{{ mentor.name }}</td>
-              <td>{{ mentor.minBilligAmt }}</td>
+              <td>{{ mentor.description }}</td>
+              <!-- <td>{{ mentor.created_on }}</td> -->
               <td>
                 <button (click)="editMentor(mentor)" class="btn btn-sm btn-outline-info">
                   Edit

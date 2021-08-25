@@ -38,6 +38,8 @@ const appRoutes: Routes = [
       , canActivate: [AuthGuard] },
       { path: 'coupons', loadChildren: () => import('../app/content/coupons/coupons.module').then(m => m.CouponsModule)
       , canActivate: [AuthGuard] },
+      { path: 'communitie', loadChildren: () => import('../app/content/communities/communities.module').then(m => m.CommunitiesModule)
+      , canActivate: [AuthGuard] },
     ],
   },
   // otherwise redirect to home

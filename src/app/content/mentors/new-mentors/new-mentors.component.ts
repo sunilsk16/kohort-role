@@ -61,6 +61,11 @@ imageList: any = [];
         // corpID: ['', Validators.required],
         name: ['', Validators.required],
         specialties: ['', Validators.required],
+        address: ['', Validators.required],
+        education: ['', Validators.required],
+        language: ['', Validators.required],
+        experinceHours: ['', Validators.required],
+        quotes: ['', Validators.required],
         bio: ['', Validators.required],
         achievement: ['', Validators.required],
         website: ['', Validators.required],
@@ -139,7 +144,7 @@ imageList: any = [];
       this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
       return;
     }
-    
+
     console.log("form submitted");
     console.log(this.iconTab.value);
     let data = {

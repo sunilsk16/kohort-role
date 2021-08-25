@@ -176,6 +176,25 @@ export const MenuSettingsConfig: MenuConfig = {
           ]
         }
       },
+
+      {
+        title: 'Communities',
+       roleValue: 'MENTORS_VIEW',
+        icon: 'la la-empire',
+        page: 'null',
+        submenu: {
+          items: [
+            {
+              title: 'Create Communities',
+              page: '/communitie/create',
+            },
+            {
+              title: 'Communities List',
+              page: '/communitie/list',
+            },
+          ]
+        }
+      },
       // {
       //   title: 'Dashboard',
       //   icon: 'la-home',

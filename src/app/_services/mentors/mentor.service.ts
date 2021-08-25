@@ -182,4 +182,96 @@ export class MentorService {
     })
   }
 
+  getCouponsById(id: any) {
+    return new Promise((resolve) => {
+      var docRef = this.firestore.collection("coupons").doc(id);
+
+      docRef.ref.get().then(function(doc) {
+        if (doc.exists) {
+          let res = { ...doc.data() as {}, id: doc.id }
+          resolve(res)
+        }
+      }).catch(function(error) {
+        resolve(null);
+      });
+    })
+  }
+
+  getCouponsBId(couponsId: any) {
+    return new Promise((resolve) => {
+      this.firestore.collection('coupons',
+        ref => ref.where('couponsId', '==', parseInt(couponsId))).snapshotChanges()
+        .subscribe(coupons => {
+          let contactList = coupons.map(item => {
+            return {
+              ...item.payload.doc.data() as {},
+              id: item.payload.doc.id
+            };
+          });
+          resolve(contactList);
+        })
+    })
+  }
+
+
+    addCommunitie(data: any) {
+      data.timeStamp = moment().format('x')
+      return firebase.firestore().collection('communitie').add(data);
+    }
+
+    updateCommunitie(uid: string, data: any) {
+      data.timeStamp = moment().format('x')
+      return this.afs.doc('communitie/' + data.id).set(data);
+    }
+
+    deleteCommunitieById(id) {
+      return this.afs.doc('communitie/' + id).delete();
+    }
+
+    getAllCommunitie() {
+      return new Promise((resolve) => {
+        this.firestore.collection('communitie').snapshotChanges()
+          .subscribe(communitie => {
+            let contactList = communitie.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+    getCommunitieById(id: any) {
+      return new Promise((resolve) => {
+        var docRef = this.firestore.collection("communitie").doc(id);
+
+        docRef.ref.get().then(function(doc) {
+          if (doc.exists) {
+            let res = { ...doc.data() as {}, id: doc.id }
+            resolve(res)
+          }
+        }).catch(function(error) {
+          resolve(null);
+        });
+      })
+    }
+
+    getCommunitieBId(communitieId: any) {
+      return new Promise((resolve) => {
+        this.firestore.collection('communitie',
+          ref => ref.where('communitieId', '==', parseInt(communitieId))).snapshotChanges()
+          .subscribe(communitie => {
+            let contactList = communitie.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+
+
 }

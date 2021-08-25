@@ -1,0 +1,58 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <div class="col-12">
+        <app-breadcrumb [breadcrumb]="breadcrumb"></app-breadcrumb>
+      </div>
+    </div>
+
+    <div class="content-body">
+      <div class="card">
+        <div class="card-body">
+          <section id="icon-tabs">
+            <div class="row">
+              <div class="col-12" *blockUI="'iconTabs'; message: 'Loading'">
+                <form [formGroup]="iconTab">
+                  <div class="row">
+                    <div class='col-md-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="clientName">Communities Name :</label>
+                        <input class="form-control" type="text" formControlName="name"  [value]="iconTab.value.name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                          <div *ngIf="f.name.errors.required">Communities Name is required</div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="form-group">
+                      <label class="form-control-label" for="subModel">Description :</label>
+                      <textarea rows="2" cols="80" class="form-control" type="text" formControlName="description"  [value]="iconTab.value.description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" ></textarea>
+                      <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                        <div *ngIf="f.description.errors.required">Description is required</div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="form-group text-center">
+                <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createCommunities(iconTab.value)">
+                  <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                  Submit
+                </button>
+                <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateCommunities(iconTab.value)">
+                  <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                  Update
+                </button>
+              </div>
+              <button routerLink="/a/subscription/view-subscription" class="btn btn-outline-secondary secondary add-btn" style="float:'right';">
+                Close
+              </button>
+              </form>
+
+            </div>
+        </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
