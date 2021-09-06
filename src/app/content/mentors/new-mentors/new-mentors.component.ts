@@ -21,8 +21,8 @@ loggedInUser: any;
   submitted = false;
 isLoading: any = false;
 isEdit: any = false;
-images = [];
 imageList: any = [];
+
   @BlockUI('iconTabs') blockUIIconTabs: NgBlockUI;
     public breadcrumb: any;
     viewSubscriptionList:any=[];
@@ -30,6 +30,7 @@ imageList: any = [];
     dtTrigger: Subject<any> = new Subject<any>();
     iconTab: FormGroup;
     mentorId: any;
+
 
     constructor(private formBuilder: FormBuilder,
      private mentorsService: MentorService,
@@ -60,18 +61,30 @@ imageList: any = [];
       this.iconTab = this.formBuilder.group({
         // corpID: ['', Validators.required],
         name: ['', Validators.required],
+        designation: ['', Validators.required],
+        bio: ['', Validators.required],
+        shortBio: ['', Validators.required],
         specialties: ['', Validators.required],
-        address: ['', Validators.required],
         education: ['', Validators.required],
         language: ['', Validators.required],
-        experinceHours: ['', Validators.required],
-        quotes: ['', Validators.required],
-        bio: ['', Validators.required],
-        achievement: ['', Validators.required],
-        website: ['', Validators.required],
-        instagram: ['', Validators.required],
+        address: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required],
         facebook: ['', Validators.required],
+        instagram: ['', Validators.required],
         twitter: ['', Validators.required],
+        website: ['', Validators.required],
+        linkedIn: ['', Validators.required],
+        experinceHours: ['', Validators.required],
+        achievement: ['', Validators.required],
+        duration: ['', Validators.required],
+        othersOne: ['', Validators.required],
+        othersTwo: ['', Validators.required],
+        othersThree: ['', Validators.required],
+        joinFrom: ['', Validators.required],
+        fileSource: [[], [Validators.required]],
+        logoSource: [[], [Validators.required]],
+
 
       });
 
@@ -80,6 +93,9 @@ imageList: any = [];
         .then((res: any) => {
           this.isEdit = true;
           this.mentorId = res.id;
+            this.imageList = res.fileSource || [];
+            console.log(this.imageList);
+
           console.log('edit Mentor ', res);
           if (res && res.id) {
             this.iconTab.patchValue(res);
@@ -162,7 +178,7 @@ imageList: any = [];
         this.isLoading = false;
         this.alertService.showSuccess('Mentor added successfully !!');
         this.iconTab.reset();
-        this.imageList = [];
+
         this.router.navigate(['/mentor/list']);
       })
       .catch(() => {
@@ -173,9 +189,12 @@ imageList: any = [];
 
     updateMentors() {
       this.isLoading = true;
+
       let data = {
+
         ...this.iconTab.value,
         id: this.mentorId ,
+
         updatedBy: this.loggedInUser,
         updatedOn: moment().format('DD-MM-YYYY hh:mm A')
       }

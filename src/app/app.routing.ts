@@ -40,6 +40,12 @@ const appRoutes: Routes = [
       , canActivate: [AuthGuard] },
       { path: 'communitie', loadChildren: () => import('../app/content/communities/communities.module').then(m => m.CommunitiesModule)
       , canActivate: [AuthGuard] },
+      { path: 'studies', loadChildren: () => import('../app/content/studies/studies.module').then(m => m.StudiesModule)
+      , canActivate: [AuthGuard] },
+      { path: 'language', loadChildren: () => import('../app/content/language/language.module').then(m => m.LanguageModule)
+      , canActivate: [AuthGuard] },
+      { path: 'review', loadChildren: () => import('../app/content/review/review.module').then(m => m.ReviewModule)
+      , canActivate: [AuthGuard] },
     ],
   },
   // otherwise redirect to home

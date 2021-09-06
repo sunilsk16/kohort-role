@@ -35,7 +35,7 @@ export class CommunitieComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadcrumb = {
-      'mainlabel': 'Mentor List',
+      'mainlabel': 'Communities List',
       'links': [
         {
           'name': 'Home',

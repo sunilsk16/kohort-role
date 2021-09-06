@@ -13,107 +13,173 @@
             <div class="row">
               <div class="col-12" *blockUI="'iconTabs'; message: 'Loading'">
 
-                          <form [formGroup]="iconTab" >
-                            <div class="row">
-                              <div class='col-md-6'>
-                                <!-- <h2>Basic Details</h2> -->
-                                <!-- <div class="form-group">
-                                  <label class="form-control-label" for="corpID">Mentor ID :</label>
-                                  <input class="form-control" type="text" formControlName="corpID" />
+                <form [formGroup]="iconTab">
+                  <div class="row">
+                    <div class='col-md-4'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="clientName">Name :</label>
+                        <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                          <div *ngIf="f.name.errors.required">Name is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="address">Address :</label>
+                        <input class="form-control" type="text" formControlName="address" [value]="iconTab.value.address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                        <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                          <div *ngIf="f.address.errors.required">Address is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="clietType">Designation :</label>
+                        <input class="form-control" type="text" formControlName="designation" [value]="iconTab.value.designation" [ngClass]="{ 'is-invalid': submitted && f.designation.errors }" />
+                        <div *ngIf="submitted && f.designation.errors" class="invalid-feedback">
+                          <div *ngIf="f.designation.errors.required">Designation is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="city">City :</label>
+                        <input class="form-control" type="text" formControlName="city" [value]="iconTab.value.city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
+                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                          <div *ngIf="f.city.errors.required">City is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="state">State :</label>
+                        <input rows="2" cols="80" class="form-control" type="text" formControlName="state" [value]="iconTab.value.state" [ngClass]="{ 'is-invalid': submitted && f.state.errors }" />
+                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                          <div *ngIf="f.state.errors.required">State is required</div>
+                        </div>
+                      </div>
 
-                                </div> -->
+                      <div class="form-group">
+                        <label class="form-control-label" for="clientName">Specialties :</label>
+                        <input class="form-control" type="text" formControlName="specialties" [value]="iconTab.value.specialties" [ngClass]="{ 'is-invalid': submitted && f.specialties.errors }" />
+                        <div *ngIf="submitted && f.specialties.errors" class="invalid-feedback">
+                          <div *ngIf="f.specialties.errors.required">Specialties is required</div>
+                        </div>
+                      </div>
 
-                                <div class="form-group">
-                                  <label class="form-control-label" for="clientName">Name :</label>
-                                  <input class="form-control" type="text" formControlName="name" [value]="iconTab.value.name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"/>
-                                  <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
-                                    <div *ngIf="f.name.errors.required">Name is required</div>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="clietType">Specialties :</label>
-                                  <input class="form-control" type="text" formControlName="specialties" [ngClass]="{ 'is-invalid': submitted && f.specialties.errors }"/>
-                                  <div *ngIf="submitted && f.specialties.errors" class="invalid-feedback">
-                                    <div *ngIf="f.specialties.errors.required">Specialties is required</div>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subModel">Bio :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="bio" [ngClass]="{ 'is-invalid': submitted && f.bio.errors }"></textarea>
-                                  <div *ngIf="submitted && f.bio.errors" class="invalid-feedback">
-                                    <div *ngIf="f.bio.errors.required">Bio is required</div>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subModel">Address :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }"></textarea>
-                                  <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
-                                    <div *ngIf="f.address.errors.required">Address is required</div>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">Achievement :</label>
-                                  <textarea  rows="2" cols="80" class="form-control" type="text" formControlName="achievement" [ngClass]="{ 'is-invalid': submitted && f.achievement.errors }"></textarea>
-                                  <div *ngIf="submitted && f.achievement.errors" class="invalid-feedback">
-                                    <div *ngIf="f.achievement.errors.required">Achievement is required</div>
-                                  </div>
-                                </div>
-                                <div class="form-group">
-                                <div class="photo-upload">
-                            <p class="logo-text">Upload Photos</p>
-                            <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" />
-                          </div>
-                            </div>
-                          <!-- <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" /> -->
+                      <div class="form-group">
+                        <div class="photo-upload">
+                          <p class="logo-text">Upload Photos</p>
+                          <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" />
+                        </div>
+                      </div>
+                      <!-- <img class="profile-picture circle" (click)="chooseFile()" src="assets/images/add.png" /> -->
 
-                          <form ngNoForm style="display:none">
-                            <input id="avatar" name="file" type="file" (change)="upload()" />
-                          </form>
-                          <br />
-                          <br />
-                              </div>
-                              <div class='col-md-6'>
+                      <form ngNoForm style="display:none">
+                        <input id="avatar" name="file" type="file" (change)="upload()" />
+                      </form>
+                      <br />
+                      <br />
+                    </div>
+                    <div class='col-md-4'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="subModel">Bio :</label>
+                        <textarea rows="2" cols="80" class="form-control" type="text" formControlName="bio" [value]="iconTab.value.bio" [ngClass]="{ 'is-invalid': submitted && f.bio.errors }"></textarea>
+                        <div *ngIf="submitted && f.bio.errors" class="invalid-feedback">
+                          <div *ngIf="f.bio.errors.required">Bio is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="subModel">Short Bio :</label>
+                        <textarea rows="2" cols="80" class="form-control" type="text" formControlName="shortBio" [value]="iconTab.value.shortBio" [ngClass]="{ 'is-invalid': submitted && f.shortBio.errors }"></textarea>
+                        <div *ngIf="submitted && f.shortBio.errors" class="invalid-feedback">
+                          <div *ngIf="f.shortBio.errors.required">Short Bio is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="subModel">Duration :</label>
+                        <input  class="form-control" type="duration" formControlName="shortBio" [value]="iconTab.value.shortBio" [ngClass]="{ 'is-invalid': submitted && f.shortBio.errors }" />
+                        <div *ngIf="submitted && f.shortBio.errors" class="invalid-feedback">
+                          <div *ngIf="f.shortBio.errors.required">Short Bio is required</div>
+                        </div>
+                      </div>
 
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">Facebook :</label>
-                                  <input class="form-control" type="text" formControlName="facebook" />
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">Instagram :</label>
-                                  <input class="form-control" type="text" formControlName="instagram" />
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">Twitter:</label>
-                                  <input class="form-control" type="text" formControlName="twitter" />
-                                </div>
-                                <div class="form-group">
-                                  <label class="form-control-label" for="subDate">Website:</label>
-                                  <input class="form-control" type="text" formControlName="website" />
-                                </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="subDate">Facebook :</label>
+                        <input class="form-control" type="text" formControlName="facebook" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="subDate">Instagram :</label>
+                        <input class="form-control" type="text" formControlName="instagram" />
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="subDate">Twitter:</label>
+                        <input class="form-control" type="text" formControlName="twitter" />
+                      </div>
+                      <!-- <div class="form-group">
+                        <label class="form-control-label" for="subDate">Website:</label>
+                        <input class="form-control" type="text" formControlName="website" />
+                      </div> -->
+                      <div class="form-group">
+                        <label class="form-control-label" for="subDate">Linked In:</label>
+                        <input class="form-control" type="text" formControlName="linkedIn" />
+                      </div>
+                    </div>
+                    <div class='col-md-4'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="language"> Language :</label>
+                        <input class="form-control" type="text" formControlName="language" [value]="iconTab.value.language" [ngClass]="{ 'is-invalid': submitted && f.language.errors }" />
+                        <div *ngIf="submitted && f.language.errors" class="invalid-feedback">
+                          <div *ngIf="f.language.errors.required">Language is required</div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="education"> Higher Education :</label>
+                        <input class="form-control" type="text" formControlName="education" [value]="iconTab.value.education" [ngClass]="{ 'is-invalid': submitted && f.education.errors }" />
+                        <div *ngIf="submitted && f.education.errors" class="invalid-feedback">
+                          <div *ngIf="f.education.errors.required">Education is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="form-control-label" for="education"> Join From :</label>
+                        <input class="form-control" type="text" formControlName="joinFrom"  [ngClass]="{ 'is-invalid': submitted && f.joinFrom.errors }" />
+                        <div *ngIf="submitted && f.joinFrom.errors" class="invalid-feedback">
+                          <div *ngIf="f.joinFrom.errors.required">joinFrom is required</div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="education"> Other-1:</label>
+                        <input class="form-control" type="text" formControlName="othersOne"  />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="education"> Other-2 :</label>
+                        <input class="form-control" type="text" formControlName="othersTwo"   />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="education"> Other-3:</label>
+                        <input class="form-control" type="text" formControlName="othersThree" />
+                      </div>
 
 
-                          <div class="row">
-                            <div class="column" *ngFor='let url of imageList; let i of index'>
-                              <img [src]="url" alt="Snow" class="img-holder" style="width:100%">
-                              <button class="btn btn-outline-danger" (click)="removeImage(i)">Remove</button>
-                            </div>
-                          </div>
-                              </div>
-                            </div>
-                            <div class="form-group text-center">
-                              <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createMentor(iconTab.value)">
-                              <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
-                              Submit
-                            </button>
-                            <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateMentors(iconTab.value)">
-                            <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
-                            Update
-                          </button>
-                            </div>
-                            <button routerLink="/a/subscription/view-subscription" class="btn btn-outline-secondary secondary add-btn" style="float:'right';">
-                              Close
-                            </button>
-                          </form>
+                      <div class="row">
+                        <div class="column" *ngFor='let url of imageList; let i of index'>
+                          <img [src]="url" alt="Snow" class="img-holder" style="width:100%">
+                          <button class="btn btn-outline-danger" (click)="removeImage(i)">Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group text-center">
+                    <button [disabled]="isLoading" *ngIf="!isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="createMentor(iconTab.value)">
+                      <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                      Submit
+                    </button>
+                    <button [disabled]="isLoading" *ngIf="isEdit" uiSref="address" type="button" class="btn btn-raised btn-info" (click)="updateMentors(iconTab.value)">
+                      <i class="fa fa-refresh fa-spin" *ngIf="isLoading"></i>
+                      Update
+                    </button>
+                  </div>
+                  <button routerLink="/a/subscription/view-subscription" class="btn btn-outline-secondary secondary add-btn" style="float:'right';">
+                    Close
+                  </button>
+                </form>
 
               </div>
             </div>

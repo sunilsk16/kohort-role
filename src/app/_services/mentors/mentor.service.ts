@@ -273,5 +273,182 @@ export class MentorService {
       })
     }
 
+    addStudies(data: any) {
+      data.timeStamp = moment().format('x')
+      return firebase.firestore().collection('studies').add(data);
+    }
+
+    updateStudies(uid: string, data: any) {
+      data.timeStamp = moment().format('x')
+      return this.afs.doc('studies/' + data.id).set(data);
+    }
+
+    deleteStudiesById(id) {
+      return this.afs.doc('studies/' + id).delete();
+    }
+
+    getAllStudies() {
+      return new Promise((resolve) => {
+        this.firestore.collection('studies').snapshotChanges()
+          .subscribe(studies => {
+            let contactList = studies.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+    getStudiesById(id: any) {
+      return new Promise((resolve) => {
+        var docRef = this.firestore.collection("studies").doc(id);
+
+        docRef.ref.get().then(function(doc) {
+          if (doc.exists) {
+            let res = { ...doc.data() as {}, id: doc.id }
+            resolve(res)
+          }
+        }).catch(function(error) {
+          resolve(null);
+        });
+      })
+    }
+
+    getStudiesBId(studiesId: any) {
+      return new Promise((resolve) => {
+        this.firestore.collection('studies',
+          ref => ref.where('studiesId', '==', parseInt(studiesId))).snapshotChanges()
+          .subscribe(communitie => {
+            let contactList = communitie.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+
+    addLanguage(data: any) {
+      data.timeStamp = moment().format('x')
+      return firebase.firestore().collection('language').add(data);
+    }
+
+    updateLanguage	(uid: string, data: any) {
+      data.timeStamp = moment().format('x')
+      return this.afs.doc('language/' + data.id).set(data);
+    }
+
+    deleteLanguageById(id) {
+      return this.afs.doc('language/' + id).delete();
+    }
+
+    getAllLanguage() {
+      return new Promise((resolve) => {
+        this.firestore.collection('language').snapshotChanges()
+          .subscribe(language => {
+            let contactList = language.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+    getLanguageById(id: any) {
+      return new Promise((resolve) => {
+        var docRef = this.firestore.collection("language").doc(id);
+
+        docRef.ref.get().then(function(doc) {
+          if (doc.exists) {
+            let res = { ...doc.data() as {}, id: doc.id }
+            resolve(res)
+          }
+        }).catch(function(error) {
+          resolve(null);
+        });
+      })
+    }
+
+    getLanguageBId(languageId: any) {
+      return new Promise((resolve) => {
+        this.firestore.collection('language',
+          ref => ref.where('languageId', '==', parseInt(languageId))).snapshotChanges()
+          .subscribe(language => {
+            let contactList = language.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+
+    addReview(data: any) {
+      data.timeStamp = moment().format('x')
+      return firebase.firestore().collection('reviews').add(data);
+    }
+
+    updateReview(uid: string, data: any) {
+      data.timeStamp = moment().format('x')
+      return this.afs.doc('reviews/' + data.id).set(data);
+    }
+
+    deleteReviewById(id) {
+      return this.afs.doc('reviews/' + id).delete();
+    }
+
+    getAllReview() {
+      return new Promise((resolve) => {
+        this.firestore.collection('reviews').snapshotChanges()
+          .subscribe(reviews => {
+            let contactList = reviews.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+    getReviewById(id: any) {
+      return new Promise((resolve) => {
+        var docRef = this.firestore.collection("reviews").doc(id);
+
+        docRef.ref.get().then(function(doc) {
+          if (doc.exists) {
+            let res = { ...doc.data() as {}, id: doc.id }
+            resolve(res)
+          }
+        }).catch(function(error) {
+          resolve(null);
+        });
+      })
+    }
+
+    getReviewBId(reviewsId: any) {
+      return new Promise((resolve) => {
+        this.firestore.collection('reviews',
+          ref => ref.where('reviewsId', '==', parseInt(reviewsId))).snapshotChanges()
+          .subscribe(reviews => {
+            let contactList = reviews.map(item => {
+              return {
+                ...item.payload.doc.data() as {},
+                id: item.payload.doc.id
+              };
+            });
+            resolve(contactList);
+          })
+      })
+    }
+
 
 }

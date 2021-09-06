@@ -11,8 +11,7 @@
               <th>Sl</th>
               <th>Name</th>
               <th>Specialties</th>
-              <th>Bio</th>
-              <th>Created On</th>
+
               <th>Action</th>
               <th>Active/Pause</th>
             </tr>
@@ -22,9 +21,9 @@
               <td>{{ i + 1 }}</td>
               <td>{{ monial.name }}</td>
               <td>{{ monial.specialties }}</td>
-              <td>{{ monial.bio}}</td>
+          
               <!-- <td>{{ group.created_by ? group.created_by.displayName : '' }}</td> -->
-              <td>{{ monial.created_on }}</td>
+
               <td>
                 <button (click)="editTestMonial(monial)" class="btn btn-sm btn-outline-info">
                   Edit

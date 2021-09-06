@@ -17,7 +17,7 @@ import * as moment from 'moment';
 })
 export class NewMeetupsComponent implements OnInit {
   registerForm: FormGroup;
-    submitted = false;
+  submitted = false;
   loggedInUser: any;
   isLoading: any = false;
   isEdit: any = false;
@@ -81,7 +81,7 @@ export class NewMeetupsComponent implements OnInit {
       mentor: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      dates: ['', Validators.required],
+      startDate: ['', Validators.required],
     });
     if (this.route.snapshot.params.id) {
       this.meetupService.getMeetupsById(this.route.snapshot.params.id)
@@ -259,6 +259,7 @@ export class NewMeetupsComponent implements OnInit {
     this.isLoading = true;
     let data = {
       ...this.iconTab.value,
+      mentorId: this.mentorId,
       id: this.meetupId,
       updatedBy: this.loggedInUser,
       updatedOn: moment().format('DD-MM-YYYY hh:mm A')

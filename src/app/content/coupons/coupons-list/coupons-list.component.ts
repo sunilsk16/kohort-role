@@ -35,7 +35,7 @@ export class CouponsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadcrumb = {
-      'mainlabel': 'Mentor List',
+      'mainlabel': 'Coupons List',
       'links': [
         {
           'name': 'Home',

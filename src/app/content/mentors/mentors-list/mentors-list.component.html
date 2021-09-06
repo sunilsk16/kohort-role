@@ -11,8 +11,6 @@
               <th>Sl</th>
               <th>Name</th>
               <th>Specialties</th>
-              <th>Bio</th>
-              <th>Created On</th>
               <th>Action</th>
               <th>Active/Pause</th>
             </tr>
@@ -22,9 +20,7 @@
               <td>{{ i + 1 }}</td>
               <td>{{ mentor.name }}</td>
               <td>{{ mentor.specialties }}</td>
-              <td>{{ mentor.bio}}</td>
-              <!-- <td>{{ group.created_by ? group.created_by.displayName : '' }}</td> -->
-              <td>{{ mentor.created_on }}</td>
+            
               <td>
                 <button (click)="editMentor(mentor)" class="btn btn-sm btn-outline-info">
                   Edit

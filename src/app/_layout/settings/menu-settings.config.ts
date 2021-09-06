@@ -195,6 +195,62 @@ export const MenuSettingsConfig: MenuConfig = {
           ]
         }
       },
+      {
+        title: 'Studies',
+       roleValue: 'MENTORS_VIEW',
+        icon: 'la la-empire',
+        page: 'null',
+        submenu: {
+          items: [
+            {
+              title: 'Create Studies',
+              page: '/studies/create',
+            },
+            {
+              title: 'Studies List',
+              page: '/studies/list',
+            },
+          ]
+        }
+      },
+
+      {
+        title: 'Language',
+       roleValue: 'MENTORS_VIEW',
+        icon: 'la la-empire',
+        page: 'null',
+        submenu: {
+          items: [
+            {
+              title: 'Create Language	',
+              page: '/language/create',
+            },
+            {
+              title: 'Language	 List',
+              page: '/language/list',
+            },
+          ]
+        }
+      },
+
+      {
+        title: 'Review',
+       roleValue: 'MENTORS_VIEW',
+        icon: 'la la-empire',
+        page: 'null',
+        submenu: {
+          items: [
+            {
+              title: 'Create Review	',
+              page: '/review/create',
+            },
+            {
+              title: 'Review	 List',
+              page: '/review/list',
+            },
+          ]
+        }
+      },
       // {
       //   title: 'Dashboard',
       //   icon: 'la-home',
