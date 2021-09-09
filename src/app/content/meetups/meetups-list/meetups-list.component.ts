@@ -16,7 +16,9 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./meetups-list.component.css']
 })
 export class MeetupsListComponent implements OnInit {
-isActive: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+  isActive: any;
   meetupsList: any;
   breadcrumb: any;
   meetup: any = {
@@ -34,6 +36,13 @@ isActive: any;
   { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     scrollX: true,
+     processing: true, order: [],
+     // scrollX: true,
+   }
     this.breadcrumb = {
       'mainlabel': 'Meetups List',
       'links': [
@@ -89,5 +98,9 @@ isActive: any;
         }
       })
   }
+  ngOnDestroy(): void {
+   this.dtTrigger.unsubscribe();
+ }
+
 
 }

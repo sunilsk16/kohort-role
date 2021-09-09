@@ -15,6 +15,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./testimonial-list.component.css']
 })
 export class TestimonialListComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   testiMonialList: any;
   isActive: any;
     public breadcrumb: any;
@@ -29,6 +31,13 @@ export class TestimonialListComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     scrollX: true,
+     processing: true, order: [],
+     // scrollX: true,
+   }
     this.breadcrumb = {
       'mainlabel': 'Testimonial List',
       'links': [
@@ -82,5 +91,10 @@ toggleUser(data) {
       }
     })
 }
+
+ngOnDestroy(): void {
+ this.dtTrigger.unsubscribe();
+}
+
 
 }

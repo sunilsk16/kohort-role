@@ -16,6 +16,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./languagea-list.component.css']
 })
 export class LanguageaListComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   mentorList: any;
   isActive: any;
   breadcrumb: any;
@@ -86,6 +88,9 @@ toggleUser(data) {
           })
       }
     })
+}
+ngOnDestroy(): void {
+ this.dtTrigger.unsubscribe();
 }
 
 }

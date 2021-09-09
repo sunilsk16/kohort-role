@@ -16,7 +16,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./review-list.component.css']
 })
 export class ReviewListComponent implements OnInit {
-
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   testiMonialList: any;
   isActive: any;
     public breadcrumb: any;
@@ -31,6 +32,13 @@ export class ReviewListComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     scrollX: true,
+     processing: true, order: [],
+     // scrollX: true,
+   }
     this.breadcrumb = {
       'mainlabel': 'Reviews List',
       'links': [
@@ -84,5 +92,10 @@ toggleUser(data) {
       }
     })
 }
+
+ngOnDestroy(): void {
+ this.dtTrigger.unsubscribe();
+}
+
 
 }

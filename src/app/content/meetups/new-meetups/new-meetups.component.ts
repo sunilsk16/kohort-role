@@ -34,6 +34,7 @@ export class NewMeetupsComponent implements OnInit {
   mentorList: any;
   d4: any;
   mentorId: any;
+  mentorName: any;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -98,16 +99,16 @@ export class NewMeetupsComponent implements OnInit {
       .then((res: any) => {
         console.log('mentorList ', res);
         this.mentorList = res;
-
-        // this.mentorLists =  mentorList.name || [];
-        // console.log('mentorListnnnnnn ',   this.mentorList);
       })
+
+
   }
 
-  onDropdownChange(e){
-  console.log(e)//you will get the id
-  this.mentorId =e //if you want to bind it to your model
+  onDropdownChange(event){
+  console.log(event)//you will get the id
+  this.mentorId =event
 }
+
 
   reloadIconTabs() {
     this.blockUIIconTabs.start('Loading..');

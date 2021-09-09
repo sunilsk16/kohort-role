@@ -1,0 +1,48 @@
+:host ::ng-deep .block-ui-wrapper {
+  background: rgba(255, 249, 249, 0.5) !important;
+}
+
+:host ::ng-deep .custom-ctr {
+  background: white;
+padding: 5px;
+
+}
+.txt-capitalize {
+  text-transform:capitalize;
+}
+
+:host ::ng-deep .btn.btn-social-icon {
+  padding: unset !important;
+}
+
+
+:host ::ng-deep .add-btn {
+  float: right;
+  margin-top: -5%;
+  position: relative;
+}
+.filter{
+border: 0px solid #aaa;
+      border-radius: 3px;
+      padding: 5px;
+      background-color: transparent;
+      margin-left: 3px;
+      width: 200px;
+      float: right;
+    margin-top: -9%;
+    margin-right: 35%;
+}
+a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a {
+  color: blue;
+}
+
+a:not([href]):not([tabindex]) {
+  color: blue;
+  cursor: pointer;
+  cursor: hand;
+}

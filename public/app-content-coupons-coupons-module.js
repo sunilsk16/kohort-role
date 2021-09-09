@@ -166,7 +166,7 @@ var CouponsListComponent = /** @class */ (function () {
     CouponsListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.breadcrumb = {
-            'mainlabel': 'Mentor List',
+            'mainlabel': 'Coupons List',
             'links': [
                 {
                     'name': 'Home',

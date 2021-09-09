@@ -16,6 +16,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./coupons-list.component.css']
 })
 export class CouponsListComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   mentorList: any;
   isActive: any;
   breadcrumb: any;
@@ -34,6 +36,13 @@ export class CouponsListComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     scrollX: true,
+     processing: true, order: [],
+     // scrollX: true,
+   }
     this.breadcrumb = {
       'mainlabel': 'Coupons List',
       'links': [
@@ -87,5 +96,10 @@ toggleUser(data) {
       }
     })
 }
+
+ngOnDestroy(): void {
+ this.dtTrigger.unsubscribe();
+}
+
 
 }

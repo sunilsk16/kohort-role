@@ -15,7 +15,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./communitie.component.css']
 })
 export class CommunitieComponent implements OnInit {
-
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
   mentorList: any;
   isActive: any;
   breadcrumb: any;
@@ -34,6 +35,13 @@ export class CommunitieComponent implements OnInit {
   { }
 
   ngOnInit(): void {
+    this.dtOptions = {
+     pagingType: 'full_numbers',
+     pageLength: 10,
+     scrollX: true,
+     processing: true, order: [],
+     // scrollX: true,
+   }
     this.breadcrumb = {
       'mainlabel': 'Communities List',
       'links': [
@@ -87,5 +95,9 @@ toggleUser(data) {
       }
     })
 }
+ngOnDestroy(): void {
+ this.dtTrigger.unsubscribe();
+}
+
 
 }

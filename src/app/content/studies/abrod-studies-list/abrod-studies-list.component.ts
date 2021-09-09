@@ -15,6 +15,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
   styleUrls: ['./abrod-studies-list.component.css']
 })
 export class AbrodStudiesListComponent implements OnInit {
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
     mentorList: any;
     isActive: any;
@@ -34,6 +36,13 @@ export class AbrodStudiesListComponent implements OnInit {
     { }
 
     ngOnInit(): void {
+      this.dtOptions = {
+       pagingType: 'full_numbers',
+       pageLength: 10,
+       scrollX: true,
+       processing: true, order: [],
+       // scrollX: true,
+     }
       this.breadcrumb = {
         'mainlabel': 'Studies List',
         'links': [
@@ -87,5 +96,10 @@ export class AbrodStudiesListComponent implements OnInit {
         }
       })
   }
+
+  ngOnDestroy(): void {
+   this.dtTrigger.unsubscribe();
+ }
+
 
   }
