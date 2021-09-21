@@ -8,6 +8,8 @@ import { ActivatedRoute } from '@angular/router'
 import { Router } from '@angular/router';
 import * as firebase from 'firebase';
 import * as moment from 'moment';
+import { countryList } from 'src/assets/data/country';
+// src\assets\data\country.ts
 
 
 
@@ -18,7 +20,7 @@ import * as moment from 'moment';
 })
 export class NewMentorsComponent implements OnInit {
 loggedInUser: any;
-  submitted = false;
+submitted = false;
 isLoading: any = false;
 isEdit: any = false;
 imageList: any = [];
@@ -30,6 +32,8 @@ imageList: any = [];
     dtTrigger: Subject<any> = new Subject<any>();
     iconTab: FormGroup;
     mentorId: any;
+    countryCode:any;
+    allCountry: any = []
 
 
     constructor(private formBuilder: FormBuilder,
@@ -39,7 +43,9 @@ imageList: any = [];
     private router: Router,) {
        if (window.localStorage.getItem('currentUser')) {
        this.loggedInUser = JSON.parse(window.localStorage.getItem('currentUser'));
-     }}
+     }
+     this.allCountry = countryList;
+   }
 
     ngOnInit(): void {
       this.breadcrumb = {
@@ -66,6 +72,7 @@ imageList: any = [];
         shortBio: ['', Validators.required],
         specialties: ['', Validators.required],
         education: ['', Validators.required],
+        country: ['', Validators.required],
         language: ['', Validators.required],
         address: ['', Validators.required],
         city: ['', Validators.required],
@@ -165,9 +172,7 @@ imageList: any = [];
     console.log(this.iconTab.value);
     let data = {
       ...this.iconTab.value,
-      // tenantId: this.currOrganization.tenantId,
-      // hotelId: this.currOrganization.id,
-      // hotelData: this.currOrganization,
+       countryCode:   this.countryCode,
       createdBy: this.loggedInUser,
       createdOn: moment().format('DD-MM-YYYY hh:mm A'),
       createdAt: moment().format('x')
@@ -194,7 +199,7 @@ imageList: any = [];
 
         ...this.iconTab.value,
         id: this.mentorId ,
-
+     countryCode:   this.countryCode,
         updatedBy: this.loggedInUser,
         updatedOn: moment().format('DD-MM-YYYY hh:mm A')
       }
@@ -207,59 +212,9 @@ imageList: any = [];
         })
     }
 
-
-  //   createMentor(value) {
-  //   // this.createCode();
-  //   let data: any = {};
-  //   if (this.isEdit) {
-  //     data.name = this.iconTab.value.name;
-  //     data.bio = this.iconTab.value.bio;
-  //     data.specialties = this.iconTab.value.specialties;
-  //     data.achievement = this.iconTab.value.achievement;
-  //     // mentorId: this.iconTab.value.mentorId,
-  //     data.facebook = this.iconTab.value.facebook;
-  //     data.twitter = this.iconTab.value.twitter;
-  //     data.website = this.iconTab.value.website;
-  //     data.instagram = this.iconTab.value.instagram;
-  //
-  //     // role.updated_on = moment().format('DD-MM-YYYY hh:mm A');
-  //     // role.timeStamp = moment().format('x');
-  //   } else {
-  //     data = {
-  //       created_by: this.loggedInUser,
-  //       name: this.iconTab.value.name,
-  //       bio: this.iconTab.value.bio,
-  //       specialties: this.iconTab.value.specialties,
-  //       achievement: this.iconTab.value.achievement,
-  //       // mentorId: this.iconTab.value.mentorId,
-  //       facebook: this.iconTab.value.facebook,
-  //       twitter: this.iconTab.value.twitter,
-  //       website: this.iconTab.value.website,
-  //       instagram: this.iconTab.value.instagram,
-  //
-  //       // created_on: moment().format('DD-MM-YYYY hh:mm A'),
-  //       // updated_on: moment().format('DD-MM-YYYY hh:mm A'),
-  //       // timeStamp: moment().format('x')
-  //     }
-  //   }
-  //   console.log(data);
-  //   // this.helper.showLoading();
-  //   this.mentorsService.addMentor(data)
-  //     .then(() => {
-  //       // return this.refreshPages();
-  //     })
-  //     .then(() => {
-  //       // this.helper.hideLoading();
-  //       let msg = this.isEdit ? 'Updated' : 'Created'
-  //       this.alertService.showSuccess(' successfully');
-  //       // this.roleName = ''
-  //     })
-  //     .catch((err: any) => {
-  //       // this.helper.hideLoading();
-  //         this.alertService.showError('Error updating !!');
-  //       console.log(err);
-  //     })
-  // }
-
+    onDropdownChange(event) {
+      console.log(event)//you will get the id
+      this.countryCode = event
+    }
 
 }

@@ -16,9 +16,11 @@ import * as moment from 'moment';
   styleUrls: ['./new-meetups.component.css']
 })
 export class NewMeetupsComponent implements OnInit {
-  registerForm: FormGroup;
-  submitted = false;
+  // registerForm: FormGroup;
+
+
   loggedInUser: any;
+  submitted = false;
   isLoading: any = false;
   isEdit: any = false;
   images = [];
@@ -35,6 +37,10 @@ export class NewMeetupsComponent implements OnInit {
   d4: any;
   mentorId: any;
   mentorName: any;
+  startDate: any;
+  minDate: any;
+  maxDate: any;
+  currMinDate: any;
 
 
   constructor(private formBuilder: FormBuilder,
@@ -46,6 +52,21 @@ export class NewMeetupsComponent implements OnInit {
     if (window.localStorage.getItem('currentUser')) {
       this.loggedInUser = JSON.parse(window.localStorage.getItem('currentUser'));
     }
+    const current = new Date();
+    console.log("current",current);
+
+    this.minDate = {
+      year: current.getFullYear(),
+      month: current.getMonth() + 1,
+      day: current.getDate()
+    };
+    console.log("minDate",this.minDate);
+
+    this.maxDate = {
+      year: current.getFullYear(),
+      month: current.getMonth(),
+      day: current.getDate(),
+    };
   }
 
   ngOnInit(): void {
@@ -75,14 +96,15 @@ export class NewMeetupsComponent implements OnInit {
       description: ['', Validators.required],
       price: ['', Validators.required],
       about: ['', Validators.required],
-      // website: ['', Validators.required],
-      // instagram: ['', Validators.required],
-      // facebook: ['', Validators.required],
-      // twitter: ['', Validators.required],
       mentor: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
       startDate: ['', Validators.required],
+      aboutOne: ['', Validators.required],
+      aboutTwo: ['', Validators.required],
+      aboutThree: ['', Validators.required],
+      aboutFour: ['', Validators.required],
+      aboutFive: ['', Validators.required],
     });
     if (this.route.snapshot.params.id) {
       this.meetupService.getMeetupsById(this.route.snapshot.params.id)
@@ -103,11 +125,22 @@ export class NewMeetupsComponent implements OnInit {
 
 
   }
-
-  onDropdownChange(event){
-  console.log(event)//you will get the id
-  this.mentorId =event
+  get f() {
+       return this.iconTab.controls;
 }
+
+  // getMinDate() {
+  //   if (this.startDate) {
+  //     return this.startDate
+  //   } else {
+  //     return this.minDate
+  //   }
+  // }
+
+  onDropdownChange(event) {
+    console.log(event)//you will get the id
+    this.mentorId = event
+  }
 
 
   reloadIconTabs() {
@@ -127,20 +160,8 @@ export class NewMeetupsComponent implements OnInit {
   chooseFile() {
     document.getElementById("avatar").click();
   }
-
-  //  comparepassword(control: AbstractControl): ValidationErrors {
-  //   if (control.parent != undefined) {
-  //     var password: string = control.parent.get("password").value;
-  //     var cpassword: string = control.parent.get("comparepassword").value;
-  //     if (password !== cpassword) {
-  //       return { matchPassword: true };
-  //     }
-  //   }
-  //   return null;
-  // }
-
   upload() {
-    // Create a root reference
+
     let storageRef = firebase.storage().ref();
 
     for (let selectedFile of [(<HTMLInputElement>document.getElementById('avatar')).files[0]]) {
@@ -165,105 +186,104 @@ export class NewMeetupsComponent implements OnInit {
     this.imageList.splice(index, 1);
   }
   selectDate(event) {
+    this.currMinDate = event;
     console.log(event);
     let year = event.year;
     let month = event.month <= 9 ? '0' + event.month : event.month;;
     let day = event.day <= 9 ? '0' + event.day : event.day;;
     let finalDate = day + "-" + month + "-" + year;
+    if (this.iconTab.value.startDate) {
+      let firstDate = year + "-" + month + "-" + day;
+      let lastDate = moment(this.iconTab.value.startDate, 'DD-MM-YYYY').format('YYYY-MM-DD')
+    }
     this.iconTab.patchValue({
-      dates: finalDate
+      startDate: {
+        day: event.day,
+        month: event.month,
+        year: event.year
+      }
     })
-    this["dates"] = finalDate;
+    console.log(finalDate, this.iconTab.value);
+    this["startDate"] = finalDate;
   }
 
-  get f() {
-     return this.iconTab.controls;
-   }
 
-   // get j() {
-   //    return this.registerForm.controls;
-   //  }
 
-    createMeetups() {
-        this.submitted = true;
+  readableDateFormat(userDate: any, isDate?: any) {
+    if (isDate) {
+      return userDate;
+    } else {
+      let year = userDate.year;
+      let month = userDate.month <= 9 ? '0' + userDate.month : userDate.month;;
+      let day = userDate.day <= 9 ? '0' + userDate.day : userDate.day;;
+      let finalDate = day + "-" + month + "-" + year;
+      return finalDate;
+    }
+  }
 
-        // stop here if form is invalid
-        if (this.iconTab.invalid) {
-          this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
-          return;
-        }
+  createMeetups() {
+    this.submitted = true;
 
-        console.log("form submitted");
-        console.log(this.iconTab.value);
-        let data = {
-          ...this.iconTab.value,
-          // tenantId: this.currOrganization.tenantId,
-          // hotelId: this.currOrganization.id,
-          // hotelData: this.currOrganization,
-          mentorId: this.mentorId,
-          createdBy: this.loggedInUser,
-          createdOn: moment().format('DD-MM-YYYY hh:mm A'),
-          createdAt: moment().format('x')
-        }
-        this.isLoading = true;
-        this.meetupService.addMeetups(data)
-          .then(() => {
-            this.isLoading = false;
-            this.alertService.showSuccess('Meetups added successfully !!');
-            this.iconTab.reset();
-            this.imageList = [];
-            this.router.navigate(['/meetups/list']);
-            // this.router.navigate(['/h/master/banquet']);
-          })
-          .catch(() => {
-            this.isLoading = false;
-          })
+    // stop here if form is invalid
+    if (this.iconTab.invalid) {
+      this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+      return;
+    }
+    // this.submitted = true;
+    // if (this.iconTab.invalid) {
+    //   this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
+    //   return false;
+    // }
+    let endTimeStamp = this.startDate + ' ' + this.getReadableTime(this.iconTab.value.endTime)
+    console.log('endTimeStamp ', endTimeStamp);
+    let data = {
+      ...this.iconTab.value,
+      mentorId: this.mentorId,
+      startDate: this.iconTab.value.startDate,
+      startDateTime: moment(endTimeStamp, 'DD-MM-YYYY hh:mm A').format('x'),
+      createdBy: this.loggedInUser,
+      createdOn: moment().format('DD-MM-YYYY hh:mm A'),
+      createdAt: moment().format('x'),
+    }
+    this.isLoading = true;
+    this.meetupService.addMeetups(data)
+      .then(() => {
+        this.isLoading = false;
+        this.alertService.showSuccess('Meetups added successfully !!');
+        this.imageList = [];
+        this.router.navigate(['/meetups/list']);
+      })
+      .catch(() => {
+        this.isLoading = false;
+      })
+  }
+
+  getReadableTime(userTime) {
+    if(userTime){
+      let hourFormat = userTime.hour <= 9 ? ('0' + userTime.hour) : userTime.hour
+      let minFormat = userTime.minute <= 9 ? ('0' + userTime.minute) : userTime.minute
+      let format = userTime.hour <= 12 ? 'AM' : 'PM'
+      if (format == 'PM') {
+        hourFormat = hourFormat - 12
+        hourFormat = hourFormat <= 9 ? ('0' + hourFormat) : hourFormat
       }
-
-
-  // createMeetups() {
-  //
-  //   if(!this.iconTab.value.name || !this.iconTab.value.description  || !this.iconTab.value.about
-  //      || !this.iconTab.value.price  || !this.iconTab.value.mentor || !this.iconTab.value.startTime
-  //      || !this.iconTab.value.endTime || !this.iconTab.value.dates
-  //   ) {
-  //     this.alertService.showError('Invalid inputs !', '3000', 'Enter Mandatory fields !');
-  //     return false;
-  //   }
-  //   console.log("form submitted");
-  //   console.log(this.iconTab.value);
-  //   let data = {
-  //     ...this.iconTab.value,
-  //     // tenantId: this.currOrganization.tenantId,
-  //     // hotelId: this.currOrganization.id,
-  //     // hotelData: this.currOrganization,
-  //     createdBy: this.loggedInUser,
-  //     createdOn: moment().format('DD-MM-YYYY hh:mm A'),
-  //     createdAt: moment().format('x')
-  //   }
-  //   this.isLoading = true;
-  //   this.meetupService.addMeetups(data)
-  //     .then(() => {
-  //       this.isLoading = false;
-  //       this.alertService.showSuccess('Meetups added successfully !!');
-  //       this.iconTab.reset();
-  //       this.imageList = [];
-  //       this.router.navigate(['/meetups/list']);
-  //       // this.router.navigate(['/h/master/banquet']);
-  //     })
-  //     .catch(() => {
-  //       this.isLoading = false;
-  //     })
-  // }
+      return (hourFormat || 0) + ':' + (minFormat || 0) + ' ' + format;
+    }
+  }
 
   updateMeetup() {
     this.isLoading = true;
+    let endTimeStamp = this.startDate + ' ' + this.getReadableTime(this.iconTab.value.endTime)
+    console.log('endTimeStamp ', endTimeStamp);
     let data = {
       ...this.iconTab.value,
       mentorId: this.mentorId,
       id: this.meetupId,
-      updatedBy: this.loggedInUser,
-      updatedOn: moment().format('DD-MM-YYYY hh:mm A')
+      startDate: this.iconTab.value.startDate,
+      startDateTime: moment(endTimeStamp, 'DD-MM-YYYY hh:mm A').format('x'),
+      createdBy: this.loggedInUser,
+      createdOn: moment().format('DD-MM-YYYY hh:mm A'),
+      createdAt: moment().format('x')
     }
     console.log('data ', data);
     this.meetupService.updateMeetups(data.id, data)

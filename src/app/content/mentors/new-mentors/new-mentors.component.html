@@ -38,10 +38,12 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="form-control-label" for="city">City :</label>
-                        <input class="form-control" type="text" formControlName="city" [value]="iconTab.value.city" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" />
-                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                          <div *ngIf="f.city.errors.required">City is required</div>
+                        <label class="form-control-label" for="clietType">Country :</label>
+                        <select class="form-control input-md" [ngModel]="selectedValue" (ngModelChange)="onDropdownChange($event)" formControlName="country" [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
+                          <option *ngFor="let country of allCountry" [ngValue]="country.code">{{country.name}}</option>
+                        </select>
+                        <div *ngIf="submitted && f.country.errors" class="invalid-feedback">
+                          <div *ngIf="f.country.errors.required">Country is required</div>
                         </div>
                       </div>
                       <div class="form-group">

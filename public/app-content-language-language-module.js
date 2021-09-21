@@ -231,9 +231,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "iInd");
 /* harmony import */ var _services_alert_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../_services/alert.service */ "f5O9");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
-/* harmony import */ var _services_mentors_mentor_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_services/mentors/mentor.service */ "nGRl");
-/* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.js */ "PdH4");
-/* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var _services_mentors_mentor_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../_services/mentors/mentor.service */ "nGRl");
+/* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! sweetalert2/dist/sweetalert2.js */ "PdH4");
+/* harmony import */ var sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_9__);
+
 
 
 
@@ -248,6 +250,8 @@ var LanguageaListComponent = /** @class */ (function () {
         this.mentorService = mentorService;
         this.router = router;
         this.alertService = alertService;
+        this.dtOptions = {};
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
         this.mentor = {
             name: '',
             bio: '',
@@ -288,7 +292,7 @@ var LanguageaListComponent = /** @class */ (function () {
     };
     LanguageaListComponent.prototype.toggleUser = function (data) {
         var _this = this;
-        sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_8___default.a.fire({
+        sweetalert2_dist_sweetalert2_js__WEBPACK_IMPORTED_MODULE_9___default.a.fire({
             title: 'Do you want to ' + (!data.isActive ? 'Activate' : 'Deactivate') + ' the ?',
             showCancelButton: true,
             confirmButtonText: "Continue",
@@ -307,8 +311,11 @@ var LanguageaListComponent = /** @class */ (function () {
             }
         });
     };
+    LanguageaListComponent.prototype.ngOnDestroy = function () {
+        this.dtTrigger.unsubscribe();
+    };
     LanguageaListComponent.ctorParameters = function () { return [
-        { type: _services_mentors_mentor_service__WEBPACK_IMPORTED_MODULE_7__["MentorService"] },
+        { type: _services_mentors_mentor_service__WEBPACK_IMPORTED_MODULE_8__["MentorService"] },
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] },
         { type: _services_alert_service__WEBPACK_IMPORTED_MODULE_5__["AlertService"] }
     ]; };
@@ -318,7 +325,7 @@ var LanguageaListComponent = /** @class */ (function () {
             template: _raw_loader_languagea_list_component_html__WEBPACK_IMPORTED_MODULE_1__["default"],
             styles: [_languagea_list_component_css__WEBPACK_IMPORTED_MODULE_2__["default"]]
         }),
-        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_services_mentors_mentor_service__WEBPACK_IMPORTED_MODULE_7__["MentorService"],
+        Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [_services_mentors_mentor_service__WEBPACK_IMPORTED_MODULE_8__["MentorService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
             _services_alert_service__WEBPACK_IMPORTED_MODULE_5__["AlertService"]])
     ], LanguageaListComponent);
