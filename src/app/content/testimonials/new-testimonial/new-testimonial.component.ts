@@ -20,7 +20,7 @@ export class NewTestimonialComponent implements OnInit {
   isLoading: any = false;
   isEdit: any = false;
   images = [];
-  imageList: any = [];
+imageList: any = [];
   @BlockUI('iconTabs') blockUIIconTabs: NgBlockUI;
   public breadcrumb: any;
   viewSubscriptionList: any = [];
@@ -63,6 +63,8 @@ export class NewTestimonialComponent implements OnInit {
       specialties: ['', Validators.required],
       bio: ['', Validators.required],
       mentor: ['', Validators.required],
+      fileSource: [[], [Validators.required]],
+      // logoSource: [[], [Validators.required]],
     });
 
     if (this.route.snapshot.params.id) {
@@ -70,6 +72,7 @@ export class NewTestimonialComponent implements OnInit {
         .then((res: any) => {
           this.isEdit = true;
           this.monialId = res.id;
+
           this.imageList = res.fileSource || [];
           console.log("img", this.imageList);
           console.log('edit Mentor ', res);
@@ -110,31 +113,32 @@ export class NewTestimonialComponent implements OnInit {
     this.iconTab.reset();
   }
 
-  chooseFile() {
-    document.getElementById("avatar").click();
-  }
 
-  upload() {
-    // Create a root reference
-    let storageRef = firebase.storage().ref();
-
-    for (let selectedFile of [(<HTMLInputElement>document.getElementById('avatar')).files[0]]) {
-      let path = '/testimonial/' + Date.now() + `${selectedFile.name}`;
-      let iRef = storageRef.child(path);
-      iRef.put(selectedFile).then((snapshot) => {
-        snapshot.ref.getDownloadURL()
-          .then((url) => {
-            this.imageList = this.iconTab.value.fileSource || [];
-            this.imageList.push(url);
-            this.iconTab.patchValue({
-              fileSource: this.imageList
-            });
-            console.log('downloadURL ', url, this.iconTab.value);
-
-          })
-      });
+      chooseFile() {
+      document.getElementById("avatar").click();
     }
-  }
+
+    upload() {
+      // Create a root reference
+      let storageRef = firebase.storage().ref();
+
+      for (let selectedFile of [(<HTMLInputElement>document.getElementById('avatar')).files[0]]) {
+        let path = '/testimonial/' + Date.now() + `${selectedFile.name}`;
+        let iRef = storageRef.child(path);
+        iRef.put(selectedFile).then((snapshot) => {
+          snapshot.ref.getDownloadURL()
+            .then((url) => {
+              this.imageList = this.iconTab.value.fileSource || [];
+              this.imageList.push(url);
+              this.iconTab.patchValue({
+                fileSource: this.imageList
+              });
+              console.log('downloadURL ', url, this.iconTab.value);
+
+            })
+        });
+      }
+    }
 
   removeImage(index) {
     this.imageList.splice(index, 1);
